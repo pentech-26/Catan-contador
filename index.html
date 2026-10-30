@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contador de Catan</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<link rel="preload" as="image" href="splash.webp">
+<meta name="theme-color" content="#9e0306">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Catan">
+<meta name="description" content="Contador de puntos de victoria para Catan y sus expansiones.">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Nunito+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--sky1:#9e0306;--sky2:#d2400f;--sky3:#f39a2a;--sky4:#f8d77c;--sky5:#f6e8c2;--card:#fff9ec;--ink:#3b1508;--mute:#7a5440;--line:#ecd3a0;--accent:#1f7fb8;--red:#a3120c;--red2:#e0601a;--gold:#f5c518;--gold2:#e39a0b;--btn:#fdeec4;--btnh:#fbe09a;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky1:#5e0204;--sky2:#7a1a08;--sky3:#3d1408;--sky4:#24100a;--sky5:#1a0b07;--card:#2b140d;--ink:#fbefd9;--mute:#c9a98c;--line:#4c2617;--accent:#6cc1e8;--red:#8f0f0a;--red2:#c4501a;--gold:#f5c518;--gold2:#e39a0b;--btn:#3a1c11;--btnh:#4a2516;--on:#1a0a05;color-scheme:dark}}
+:root[data-theme="dark"]{--sky1:#5e0204;--sky2:#7a1a08;--sky3:#3d1408;--sky4:#24100a;--sky5:#1a0b07;--card:#2b140d;--ink:#fbefd9;--mute:#c9a98c;--line:#4c2617;--accent:#6cc1e8;--red:#8f0f0a;--red2:#c4501a;--gold:#f5c518;--gold2:#e39a0b;--btn:#3a1c11;--btnh:#4a2516;--on:#1a0a05;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--sky1) 0,var(--sky2) 240px,var(--sky3) 520px,var(--sky4) 820px,var(--sky5) 1200px) var(--sky5);color:var(--ink);font:600 16px/1.35 "Nunito Sans",system-ui,sans-serif}
+.hero{background:transparent}
+.hero div{max-width:1100px;margin:0 auto;padding:22px 16px 6px;display:flex;justify-content:center;text-align:center}
+h1{margin:0;font:900 clamp(30px,7vw,52px)/1.05 "Cinzel",Georgia,serif;letter-spacing:.02em;background:linear-gradient(180deg,#fff2a0 0%,var(--gold) 45%,var(--gold2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 0 #4a1a02) drop-shadow(0 3px 6px rgba(0,0,0,.35))}
+h1 small{display:flex;align-items:center;justify-content:center;gap:12px;font:800 13px/1.4 "Nunito Sans",sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#fff6e0;-webkit-text-fill-color:#fff6e0;margin-top:8px}
+h1 small::before,h1 small::after{content:"";width:40px;height:3px;border-radius:2px;background:#fff6e0}
+main{max-width:1100px;margin:0 auto;padding:16px}
+.bar,.cc,.p{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 6px 20px rgba(110,25,0,.18)}
+.bar{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:end;justify-content:center;padding:14px}
+.bar>label,.bar .dd{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:13px;color:var(--mute);text-align:center}
+.bar label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--mute)}
+select,input[type=text]{font:inherit;color:var(--ink);background:var(--btn);border:1px solid var(--line);border-radius:10px;padding:8px}
+.target{display:flex;align-items:center;gap:8px}
+.target b{font:900 32px/1 "Cinzel",Georgia,serif;min-width:2ch;text-align:center;color:var(--red)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .target b{color:var(--gold)}}
+.mods{width:100%;padding-top:10px;border-top:1px dashed var(--line);font-size:14px}
+.mods summary{cursor:pointer;font:700 16px/1.3 "Cinzel",Georgia,serif;color:var(--red);padding:4px 0;list-style-position:inside}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .mods summary{color:var(--gold)}}
+.mods summary .cnt{font:800 12px "Nunito Sans",sans-serif;color:var(--mute);margin-left:6px}
+.mg{margin-top:10px}
+.mg h3{margin:0 0 6px;font:800 12px/1.2 "Nunito Sans",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.mg div{display:flex;flex-wrap:wrap;gap:6px 16px}
+.mg label{display:flex;flex-direction:row;align-items:center;color:var(--ink);gap:6px;font-size:14px}
+.mg label em{font-style:normal;color:var(--mute);font-size:12px}
+.mg[hidden]{display:none}
+.warn{margin-top:8px;padding:8px 10px;border-radius:10px;background:var(--btn);border-left:5px solid var(--gold2);font-size:13px;color:var(--ink)}
+.warn:empty{display:none}
+input[type=checkbox]{accent-color:var(--red);width:18px;height:18px}
+button{font:inherit;font-weight:800;color:var(--ink);background:var(--btn);border:1px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer;min-height:40px;transition:background .15s,transform .1s}
+button:hover:not(:disabled){background:var(--btnh)}
+button:active:not(:disabled){transform:translateY(1px)}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.sq{width:40px;padding:0;font-size:20px;border-radius:50%}
+.dd{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:13px;color:var(--mute)}
+#sc{display:flex;justify-content:space-between;gap:12px;min-width:240px;max-width:100%;font-size:16px;text-align:left;padding:8px 12px}
+#scl{text-align:left;position:absolute;top:100%;left:0;z-index:20;margin-top:4px;width:max-content;min-width:100%;max-width:min(92vw,380px);max-height:60vh;overflow-y:auto;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 28px rgba(60,20,0,.28)}
+#scl[hidden]{display:none}
+.gt{font:700 15px/1.2 "Cinzel",Georgia,serif;color:var(--red);padding:12px 12px 6px;border-top:1px solid var(--line);background:var(--btn)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .gt{color:var(--gold)}}
+.gt:first-child{border-top:0}
+.op{display:flex;width:100%;justify-content:space-between;gap:12px;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;font-weight:600;text-align:left;padding:8px 12px;min-height:38px}
+.op span:last-child{color:var(--mute);font-size:14px}
+.op:hover{background:var(--btnh)}
+.op[aria-selected=true]{color:var(--accent);font-weight:800}
+.banner{margin:14px 0 0;padding:12px 16px;border-radius:14px;background:linear-gradient(180deg,#ffe470,var(--gold2));color:#3b1508;border:2px solid #b5700a;font:900 20px/1.25 "Cinzel",Georgia,serif;box-shadow:0 4px 14px rgba(200,120,0,.3)}
+.grid{display:block;max-width:640px;margin:12px auto 0}
+.stick{position:sticky;top:0;z-index:15;max-width:640px;margin:14px auto 0;padding-top:env(safe-area-inset-top,0px);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:0 0 14px 14px}
+.scen{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:12px 14px 10px;border-radius:16px;background:linear-gradient(180deg,var(--red) 0%,#c4280f 100%);color:#fff6e0;border:2px solid var(--gold2);box-shadow:0 6px 18px rgba(110,25,0,.25)}
+.scen .sg{font:800 11px/1 "Nunito Sans",sans-serif;letter-spacing:.25em;text-transform:uppercase;opacity:.85}
+.scen .sn{font:900 clamp(20px,5.5vw,28px)/1.1 "Cinzel",Georgia,serif;color:var(--gold);text-shadow:0 2px 0 #4a1a02}
+.scen .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.scen .chip{font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;background:rgba(255,246,224,.16);border:1px solid rgba(255,246,224,.4)}
+.scen .chip.pv{background:linear-gradient(180deg,#ffe470,var(--gold2));color:#3b1508;border-color:#b5700a}
+.tabs{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:6px;padding:8px 0 4px}
+.tab{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;padding:8px 4px 6px;border-radius:14px 14px 10px 10px;border:1px solid var(--line);border-top:6px solid var(--c);background:var(--card);opacity:.82;box-shadow:0 4px 12px rgba(110,25,0,.15)}
+.tab .tn{font-size:13px;font-weight:800;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tab .ts{font:900 24px/1 "Cinzel",Georgia,serif}
+.tab[aria-selected=true]{opacity:1;transform:translateY(-3px);outline:2px solid var(--c);outline-offset:-1px;box-shadow:0 8px 18px rgba(110,25,0,.25)}
+.tab.win{background:linear-gradient(180deg,#ffe470,var(--gold2));color:#3b1508}
+.tab:hover:not([aria-selected=true]){opacity:1;background:var(--card)}
+.swipe{text-align:center;color:var(--ink);font-size:12px;font-weight:700;margin:8px 0 0;opacity:.85}
+.p{border-top:8px solid var(--c);padding:12px 14px;position:relative}
+.p.win{outline:3px solid var(--gold2);box-shadow:0 0 0 6px rgba(245,197,24,.25),0 4px 16px rgba(200,120,0,.25)}
+.top{display:flex;gap:10px;align-items:center}
+.top input{flex:1;min-width:0;font-weight:800;background:transparent;border-color:transparent;font-size:18px}
+.top input:hover,.top input:focus{background:var(--btn);border-color:var(--line)}
+.score{font:900 46px/1 "Cinzel",Georgia,serif;color:var(--ink)}
+.score small{font:600 15px "Nunito Sans",sans-serif;color:var(--mute)}
+.prog{height:10px;border-radius:5px;background:#f6e3b0;}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .prog{background:#3a1c11}}
+:root[data-theme="dark"] .prog{background:#3a1c11}
+.prog{border:1px solid var(--line);margin:8px 0 10px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--c);transition:width .25s}
+.row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-top:1px solid var(--line)}
+.row span em{font-style:normal;color:var(--mute);font-size:13px;margin-left:6px}
+.step{display:flex;align-items:center;gap:8px}
+.step b{min-width:2ch;text-align:center;font-size:20px}
+.tg{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tg button{border-radius:999px;font-size:14px}
+.tg button[aria-pressed=true]{background:linear-gradient(180deg,#ffe470,var(--gold2));color:#3b1508;border-color:#b5700a}
+.foot{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+#rsw{justify-content:center;margin:24px 0 8px}
+#rs{background:var(--red);color:#fff6e0;border-color:var(--red);font:900 22px/1 "Cinzel",Georgia,serif;padding:16px 40px;min-height:58px;min-width:min(100%,320px);border-radius:999px;box-shadow:0 6px 18px rgba(120,20,0,.3)}
+#rs:hover{background:#c4280f}
+.legal{text-align:center;color:var(--mute);font-size:12px;line-height:1.5;margin:18px 0 6px;padding:10px;background:var(--card);border-radius:12px;opacity:.9}
+.hint{margin:14px 0 0 !important;color:var(--mute);background:var(--card);border-radius:12px;padding:10px 12px;font-size:13px;margin-top:10px}
+button:disabled{opacity:.45;cursor:default}
+.cc{margin-top:14px;padding:14px;border-left:8px solid #2b2b33}
+.cc>b{font:700 18px "Cinzel",Georgia,serif}
+.pips{display:flex;gap:6px;margin:8px 0 10px}
+.pips i{flex:1;height:22px;border-radius:6px;background:linear-gradient(180deg,#7cc6ec,var(--accent));opacity:.45}
+.pips i.on{background:#2b2b33;opacity:1}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .pips i.on{background:#e8e0d0}}
+.vs{display:flex;gap:20px;flex-wrap:wrap;align-items:baseline;font:900 24px/1.2 "Cinzel",Georgia,serif}
+.vs small{font:600 14px "Nunito Sans",sans-serif;color:var(--mute)}
+.res{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--btn);border-left:6px solid var(--accent)}
+.kn{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:4px 0;font-size:14px}
+.kn .step b{font-size:17px;min-width:1.5ch}
+.kn .sq{width:34px;min-height:34px}
+
+.scr{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px 20px calc(24px + env(safe-area-inset-bottom,0px));text-align:center;background:linear-gradient(180deg,#9e0306 0%,#c8300f 38%,#ef8a25 70%,#f8d77c 100%);color:#fff6e0;overflow-y:auto;transition:opacity .5s}
+.scr[hidden]{display:none}
+.scr.out{opacity:0;pointer-events:none}
+#splash{cursor:pointer}
+#splash{background:#9f0107 url(splash.webp) center bottom/100% auto no-repeat;justify-content:flex-start;padding-top:calc(14vh + env(safe-area-inset-top,0px));animation:fadein .8s ease-out both}
+@media (min-aspect-ratio:9/16){#splash{background-size:contain;background-position:center}}
+#splash .tap{font:800 15px/1.2 "Nunito Sans",sans-serif;letter-spacing:.28em;text-transform:uppercase;color:#3b1508;background:rgba(255,246,224,.85);padding:12px 22px;border-radius:999px;animation:pulse 1.6s ease-in-out infinite}
+#splash .tap{box-shadow:0 6px 20px rgba(0,0,0,.4);background:linear-gradient(180deg,#ffe470,#e39a0b);border:2px solid #fff2a0;font-size:16px;padding:16px 30px;min-height:56px;cursor:pointer}
+@keyframes fadein{from{opacity:0}}
+.scr h2{margin:0;font:900 clamp(30px,8.5vw,52px)/1.1 "Cinzel",Georgia,serif;background:linear-gradient(180deg,#fff2a0,#f5c518 45%,#e39a0b);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 0 #4a1a02) drop-shadow(0 4px 8px rgba(0,0,0,.35))}
+.box{background:#fff9ec;color:#3b1508;border-radius:20px;padding:22px 20px;width:min(100%,420px);box-shadow:0 14px 40px rgba(80,10,0,.35);display:flex;flex-direction:column;gap:12px}
+.box p{margin:0;color:#7a5440;font-size:15px}
+.box input{font:800 18px "Nunito Sans",sans-serif;text-align:center;letter-spacing:.12em;text-transform:uppercase;padding:12px;border-radius:12px;border:2px solid #ecd3a0;background:#fdeec4;color:#3b1508}
+.box .err{color:#a3120c;font-weight:800;min-height:1.2em}
+.big{font:900 18px/1 "Cinzel",Georgia,serif;padding:15px 18px;border-radius:999px;min-height:52px;border:0;color:#fff6e0;background:#a3120c;box-shadow:0 5px 14px rgba(120,20,0,.3)}
+.big.gold{background:linear-gradient(180deg,#ffe470,#e39a0b);color:#3b1508}
+.big.ghost{background:transparent;color:#1f7fb8;border:2px solid #1f7fb8;box-shadow:none}
+.trialbar{display:none;margin-top:14px;padding:10px 14px;border-radius:12px;background:var(--card);border:1px dashed var(--gold2);text-align:center;font-weight:800;color:var(--mute)}
+.trialbar.on{display:block}
+.trialbar a{color:var(--accent)}
+@keyframes pulse{50%{transform:scale(1.06);opacity:.75}}
+@keyframes rise{from{transform:translateY(24px) scale(.94);opacity:0}}
+@media (prefers-reduced-motion:reduce){#splash,#splash .tap{animation:none}}
+#rot{position:fixed;inset:0;z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px;text-align:center;background:linear-gradient(180deg,#9e0306,#c8300f 60%,#ef8a25);color:#fff6e0}
+#rot svg{width:72px;height:72px;animation:turn 2s ease-in-out infinite}
+#rot b{font:900 26px/1.2 "Cinzel",Georgia,serif;color:#f5c518;text-shadow:0 2px 0 #4a1a02}
+#rot span{font-size:15px;font-weight:700}
+@keyframes turn{0%,20%{transform:rotate(90deg)}60%,100%{transform:rotate(0)}}
+@media (orientation:landscape) and (max-height:540px) and (pointer:coarse){#rot{display:flex}body{overflow:hidden}}
+</style>
+</head>
+<body>
+<div id="rot" role="alert" aria-live="assertive">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#fff6e0" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><line x1="11" y1="18.5" x2="13" y2="18.5"/></svg>
+  <b>Gira el móvil</b>
+  <span>El contador se usa en vertical</span>
+</div>
+<div id="splash" class="scr" aria-label="Contador de Catan">
+  <button class="tap" id="tapBtn" type="button">Toca para empezar</button>
+</div>
+<div id="lic" class="scr" hidden>
+  <h2>Contador de Catan</h2>
+  <div class="box">
+    <p id="licMsg">Introduce tu clave de licencia para desbloquear el contador.</p>
+    <input id="licKey" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="TU CLAVE" aria-label="Clave de licencia">
+    <div class="err" id="licErr" role="alert"></div>
+    <button class="big" id="licGo">Desbloquear</button>
+    <button class="big gold" id="licBuy">Comprar clave</button>
+    <button class="big ghost" id="licTry">Probar gratis</button>
+    <p id="licLeft" style="font-size:13px"></p>
+  </div>
+</div>
+<header class="hero"><div><h1>Contador de Catan<small>Puntos de victoria</small></h1></div></header>
+<main>
+<section class="bar">
+  <label>Jugadores<select id="n"></select></label>
+  <div class="dd"><span id="scn">Escenario</span><button id="sc" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="scn sc"></button><div id="scl" role="listbox" aria-labelledby="scn" hidden></div></div>
+  <div class="target" aria-label="Puntos para ganar">
+    <button class="sq" id="tm" aria-label="Bajar objetivo">−</button>
+    <label style="align-items:center">PV para ganar<b id="tv"></b></label>
+    <button class="sq" id="tp" aria-label="Subir objetivo">+</button>
+  </div>
+  <details class="mods" id="mods">
+    <summary>Expansiones y variantes<span class="cnt" id="mcnt"></span></summary>
+    <div class="mg" id="g_exp"><h3>Expansiones combinables</h3><div>
+      <label><input type="checkbox" id="m_cc"> Ciudades y Caballeros</label>
+      <label id="l_sea"><input type="checkbox" id="m_sea"> Navegantes <em>(barcos)</em></label>
+    </div></div>
+    <div class="mg"><h3>Variantes que suman PV</h3><div>
+      <label><input type="checkbox" data-m="port"> Maestro portuario <em>+1 PV · carta de 2 PV</em></label>
+      <label><input type="checkbox" data-m="wall"> Murallas de la ciudad <em>+1 PV</em></label>
+      <label><input type="checkbox" data-m="spec"> Especialistas <em>+2 PV</em></label>
+    </div></div>
+    <div class="mg"><h3>Otras variantes</h3><div>
+      <label><input type="checkbox" data-m="jungle"> En la Jungla</label>
+      <label><input type="checkbox" data-m="volc"> Volcanes</label>
+      <label><input type="checkbox" data-m="events"> Eventos de Catan</label>
+      <label><input type="checkbox" data-m="castles"> Castillos</label>
+      <label><input type="checkbox" data-m="magic7"> El 7 Mágico</label>
+      <label><input type="checkbox" data-m="friendly"> Ladrón Amistoso</label>
+      <label><input type="checkbox" data-m="two"> Catan para 2</label>
+    </div></div>
+    <div class="mg" id="g_wonders" hidden><h3>Las Maravillas</h3><div>
+      <label><input type="checkbox" data-m="won11"> Ganar con 11 PV <em>(o al acabar la maravilla)</em></label>
+    </div></div>
+    <div class="mg" id="g_ccv" hidden><h3>Variantes de Ciudades y Caballeros</h3><div>
+      <label><input type="checkbox" data-m="ccmore"> Más de 4 jugadores</label>
+      <label><input type="checkbox" data-m="ccatk"> Variante de los ataques</label>
+      <label><input type="checkbox" data-m="ccerr"> Caballero errante</label>
+      <label><input type="checkbox" data-m="cceasy"> Comienzo fácil</label>
+    </div></div>
+    <div class="warn" id="mwarn"></div>
+  </details>
+</section>
+<p class="hint">Gana quien llega al objetivo en su turno. Las cartas de 2 PV (Ruta Comercial, Gran Ejército, Maestro portuario) las tiene un solo jugador a la vez. «Extras» sirve para PVE, metrópolis, Defensor de Catan, fichas de pueblo y cualquier otro punto de mapa.</p>
+<div id="ban"></div>
+<div id="cc"></div>
+<div class="stick">
+<div class="scen" id="scen" aria-live="polite"></div>
+<p class="swipe">Desliza la tarjeta o toca una pestaña para cambiar de jugador</p>
+<nav class="tabs" id="tabs" role="tablist" aria-label="Jugadores"></nav>
+</div>
+<section class="grid" id="g"></section>
+<div class="trialbar" id="trialbar"></div>
+<div class="foot" id="rsw">
+  <button id="rs">Nueva partida</button>
+</div>
+<footer class="legal">Contador no oficial para uso personal. CATAN es una marca registrada de CATAN GmbH; el juego está editado en España por Devir.<br>App creada por PenTech.</footer>
+</main>
+<script>
+const G=[["Base",[["Catan normal (3-6 jug.)",10]]],
+["Navegantes",[["Hacia las nuevas costas",13],["Las islas",12],["Océanos",12],["El nuevo mundo",12],["La gran travesía",12],["Gran Catan",18],["A través del desierto",12]]],
+["Ciudades y Caballeros",[["Ciudades y Caballeros",13]]],
+["Variantes",[["La Caravana",12],["Los pescadores",10],["Catan para 2",10]]],
+["Mapas",[["Las Maravillas de Catan",10],["Jinetes del Desierto",13],["Atlantis",10],["Los especialistas",16],["El Gran Canal",16],["El atolón",12],["Triángulo de las Bermudas",12],["La Invasión Bárbara",12],["Mercaderes y Bárbaros",13],["Los Ríos de Catan",10],["Las Colonias",13],["Los Gremios",10]]],
+["Tableros propios",[["Alejandro el Grande",14],["Keops",12],["La Gran Muralla",10],["Troya",15],["Nuremberg",13],["La conquista del mundo",10],["Los pueblos marineros",15],["El saqueo de Roma",10]]]];
+const PV={},GR={};G.forEach(g=>g[1].forEach(x=>{PV[x[0]]=x[1];GR[x[0]]=g[0]}));
+const COL=[["Rojo","#d1382c"],["Azul","#2a6fc9"],["Naranja","#e08a1e"],["Blanco","#bdb197"],["Verde","#3f9b52"],["Marrón","#8a5a36"]];
+const K="catan-contador-v1";
+const blank=i=>({name:COL[i][0],s:2,c:0,v:0,e:0});
+let S={n:4,sc:"Catan normal (3-6 jug.)",adj:0,m:{},hold:{road:-1,army:-1,port:-1},p:[0,1,2,3,4,5].map(blank)};
+try{const r=JSON.parse(localStorage.getItem(K));if(r&&r.p)S=r}catch(e){}
+if(S.sc)S.sc=S.sc.replace("Catán","Catan");S.m=S.m||{};if(S.adj===undefined){S.adj=(S.base!==undefined&&PV[S.sc]!==undefined)?S.base-PV[S.sc]:0;delete S.base}if(S.msg)S.msg=S.msg.replace(/Catán/g,"Catan");
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const $=id=>document.getElementById(id);
+const MN={jungle:"Jungla",volc:"Volcanes",events:"Eventos",castles:"Castillos",magic7:"7 Mágico",friendly:"Ladrón Amistoso",two:"Catan para 2",port:"Maestro portuario",wall:"Murallas",spec:"Especialistas",won11:"Victoria a 11 PV",ccmore:"C&C: más de 4",ccatk:"C&C: ataques",ccerr:"C&C: caballero errante",cceasy:"C&C: comienzo fácil"};
+const isSea=()=>GR[S.sc]==="Navegantes";
+const seaOn=()=>isSea()||!!S.sea;
+function baseFor(){let b=PV[S.sc]||10;
+  if(S.sc==="Los Ríos de Catan"&&(S.sea||S.cc))b=12;            // PDF: con Navegantes o C&C, 12 PV
+  if(S.sc==="Las Maravillas de Catan"&&S.m.won11)b=11;            // PDF: variante a 11 PV
+  return b}
+const target=()=>Math.max(3,baseFor()+(S.adj||0)+(S.m.port?1:0)+(S.m.wall?1:0)+(S.m.spec?2:0));
+const total=(p,i)=>p.s+2*p.c+p.v+p.e+(S.cc?2*(p.m||0):0)+(S.hold.road===i?2:0)+(S.hold.army===i?2:0)+(S.m.port&&S.hold.port===i?2:0);
+$("n").innerHTML=[2,3,4,5,6].map(k=>`<option value="${k}">${k}</option>`).join("");
+$("scl").innerHTML=G.map(g=>`<div class="gt" role="presentation">${g[0]}</div>`+g[1].map(x=>`<button class="op" role="option" data-v="${x[0]}"><span>${x[0]}</span><span>${x[1]} PV</span></button>`).join("")).join("");
+const openDD=o=>{$("scl").hidden=!o;$("sc").setAttribute("aria-expanded",o)};
+$("sc").onclick=()=>openDD($("scl").hidden);
+$("scl").onclick=e=>{const b=e.target.closest(".op");if(!b)return;S.sc=b.dataset.v;S.adj=0;if(S.sc==="Ciudades y Caballeros")S.cc=1;if(S.sc!=="Las Maravillas de Catan")S.m.won11=0;if(isSea())S.sea=0;if(S.sc==="Catan para 2")S.n=2;openDD(false);$("sc").focus();draw()};
+document.addEventListener("click",e=>{if(!e.target.closest(".dd"))openDD(false)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("scl").hidden){openDD(false);$("sc").focus()}});
+const stepper=(i,k,label,note,min)=>`<div class="row"><span>${label}<em>${note}</em></span><div class="step"><button class="sq" data-i="${i}" data-k="${k}" data-d="-1" aria-label="Quitar ${label}">−</button><b>${S.p[i][k]||0}</b><button class="sq" data-i="${i}" data-k="${k}" data-d="1" aria-label="Añadir ${label}">+</button></div></div>`;
+function draw(){
+  {const no2=S.sc==="Catan normal (3-6 jug.)"&&!S.m.two;const o2=$("n").querySelector('option[value="2"]');o2.disabled=no2;if(no2&&S.n<3)S.n=3}
+  $("n").value=S.n;$("sc").innerHTML=`<span>${esc(S.sc)}</span><span>▾</span>`;document.querySelectorAll(".op").forEach(o=>o.setAttribute("aria-selected",o.dataset.v===S.sc));$("tv").textContent=target();
+  $("m_cc").checked=!!S.cc;$("m_sea").checked=!!S.sea;$("l_sea").hidden=isSea();
+  document.querySelectorAll("[data-m]").forEach(c=>c.checked=!!S.m[c.dataset.m]);
+  $("g_wonders").hidden=S.sc!=="Las Maravillas de Catan";$("g_ccv").hidden=!S.cc;
+  const act=(S.cc&&S.sc!=="Ciudades y Caballeros"?1:0)+(S.sea?1:0)+Object.keys(S.m).filter(k=>S.m[k]&&MN[k]&&!(k.startsWith("cc")&&!S.cc)).length;
+  $("mcnt").textContent=act?`(${act} activa${act>1?"s":""})`:"";
+  const w=[];
+  if(S.cc&&seaOn())w.push("Ciudades y Caballeros con Navegantes: un solo ataque bárbaro para todas las islas, las reglas de calles valen para los barcos, el oro no da mercancías y los caballeros pueden viajar en barco (se crean siempre en la isla principal). El PDF avisa de que los mapas con zonas inexploradas o muchas islas pequeñas no van bien.");
+  if(S.sc==="Los Ríos de Catan"&&(S.sea||S.cc))w.push("Los Ríos de Catan se juega a 12 PV con "+(S.sea&&S.cc?"Navegantes y Ciudades y Caballeros":S.sea?"Navegantes (un barco en una desembocadura da 1 PV mientras siga allí)":"Ciudades y Caballeros (los caballeros en cruces de río no dan PV)")+".");
+  if(S.m.wall&&S.cc)w.push("Murallas de la ciudad ya forma parte de Ciudades y Caballeros: no hace falta activarla aparte.");
+  if(S.m.two&&S.n!==2)w.push("Catan para 2 está pensado para 2 jugadores reales.");
+  $("mwarn").innerHTML=w.map(x=>"• "+esc(x)).join("<br>");
+  const t=target();let best=-1,bi=-1;
+  const ps=S.p.slice(0,S.n);
+  ps.forEach((p,i)=>{const v=total(p,i);if(v>=t&&v>best){best=v;bi=i}});
+  $("ban").innerHTML=bi>=0?`<div class="banner" role="status">¡${esc(ps[bi].name)} llega a ${best} PV! Si es su turno, ha ganado.</div>`:"";
+  const chips=[`<span class="chip pv">Objetivo ${t} PV</span>`,`<span class="chip">${S.n} jugadores</span>`];
+  if(S.cc&&S.sc!=="Ciudades y Caballeros")chips.push('<span class="chip">+ Ciudades y Caballeros</span>');
+  if(S.sea)chips.push('<span class="chip">+ Navegantes</span>');
+  Object.keys(MN).forEach(k=>{if(S.m[k]&&!(k.startsWith("cc")&&!S.cc))chips.push(`<span class="chip">+ ${MN[k]}</span>`)});
+  $("scen").innerHTML=`<span class="sg">${esc(GR[S.sc]||"Escenario")}</span><span class="sn">${esc(S.sc)}</span><span class="chips">${chips.join("")}</span>`;
+  S.tab=Math.min(Math.max(0,S.tab||0),S.n-1);
+  const tabs=$("tabs");tabs.style.setProperty("--n",S.n);
+  tabs.innerHTML=ps.map((p,i)=>`<button class="tab${bi===i?" win":""}" role="tab" id="tab${i}" aria-controls="g" aria-selected="${i===S.tab}" tabindex="${i===S.tab?0:-1}" data-t="${i}" style="--c:${COL[i][1]}"><span class="tn">${esc(p.name)}</span><span class="ts">${total(p,i)}</span></button>`).join("");
+  $("g").setAttribute("role","tabpanel");$("g").setAttribute("aria-labelledby","tab"+S.tab);
+  $("g").innerHTML=ps.map((p,i)=>{if(i!==S.tab)return "";const v=total(p,i);
+    const tg=(k,l)=>`<button data-h="${k}" data-i="${i}" aria-pressed="${S.hold[k]===i}">${l} (2)</button>`;
+    return `<article class="p${bi===i?" win":""}" style="--c:${COL[i][1]}">
+    <div class="top"><input type="text" value="${esc(p.name)}" data-name="${i}" aria-label="Nombre del jugador ${i+1}"><div class="score">${v}<small> / ${t}</small></div></div>
+    <div class="prog"><i style="width:${Math.min(100,v/t*100)}%"></i></div>
+    ${stepper(i,"s","Poblados","1 PV")}${stepper(i,"c","Ciudades","2 PV")}${stepper(i,"v","Cartas de PV","1 PV")}${stepper(i,"e","Extras","1 PV c/u")}${S.cc?ccRows(i):""}
+    <div class="tg">${tg("road","Ruta Comercial")}${tg("army","Gran Ejército")}${S.m.port?tg("port","Maestro portuario"):""}</div></article>`}).join("");
+  drawCC();save();
+}
+const BAR=7;
+const gv=(p,k)=>p[k]||0;
+const ccRows=i=>{const p=S.p[i];const bt=(k,d,l,t)=>`<button class="sq" data-i="${i}" data-k="${k}" data-d="${d}" aria-label="${l}">${t}</button>`;const kr=(L,n)=>`<div class="kn"><span>${n}</span><span class="step">${bt("k"+L,-1,"Quitar caballero "+n,"−")}<b>${gv(p,"k"+L)}</b>${bt("k"+L,1,"Añadir caballero "+n,"+")}</span><span class="step">act. ${bt("a"+L,-1,"Desactivar "+n,"−")}<b>${gv(p,"a"+L)}</b>${bt("a"+L,1,"Activar "+n,"+")}</span></div>`;return stepper(i,"m","Metrópolis","+2 PV c/u, sobre una ciudad")+stepper(i,"w","Murallas","mano "+(7+2*gv(p,"w")))+`<div class="row"><span>Caballeros<em>total · activos</em></span></div>`+kr(1,"Básicos")+kr(2,"Fuertes")+kr(3,"Míticos")};
+function force(){let b=0,d=0;S.p.slice(0,S.n).forEach(p=>{b+=p.c;d+=gv(p,"a1")+2*gv(p,"a2")+3*gv(p,"a3")});return[b,d]}
+function resolve(){const ps=S.p.slice(0,S.n),[b,d]=force();let m;
+  if(d>=b){m=`Ganan los defensores (${d} contra ${b}). Aplica la carta «Defensor de Catan».`}
+  else{const f=ps.map(p=>gv(p,"a1")+2*gv(p,"a2")+3*gv(p,"a3"));const mn=Math.min(...f);const out=[];
+    ps.forEach((p,i)=>{if(f[i]!==mn)return;if(p.c-gv(p,"m")>0){p.c--;p.s++;p.w=Math.min(gv(p,"w"),p.c);out.push(`${p.name} pierde una ciudad (pasa a poblado)`)}else out.push(`${p.name} no tiene ciudad que perder`)});
+    m=`Ganan los bárbaros (${b} contra ${d}). Aportaron menos: ${out.join("; ")}.`}
+  ps.forEach(p=>{p.a1=p.a2=p.a3=0});S.bar=0;S.msg=m;draw()}
+function drawCC(){const el=$("cc");if(!S.cc){el.innerHTML="";return}
+  const [b,d]=force(),r=S.bar||0;
+  el.innerHTML=`<section class="cc"><b>Bárbaros: ${r} de ${BAR}</b><div class="pips" role="img" aria-label="Bárbaros ${r} de ${BAR}">${Array.from({length:BAR},(_,k)=>`<i class="${k<r?"on":""}"></i>`).join("")}</div><div class="vs"><span>Bárbaros ${b}<small> ciudades</small></span><span>Defensa ${d}<small> espadas activas</small></span></div><div class="foot"><button data-a="bp">Avanzan (barco negro)</button><button data-a="bm">Retroceder uno</button><button data-a="br" ${r<BAR?"disabled":""}>Resolver ataque</button></div>${S.msg?`<div class="res" role="status">${esc(S.msg)}</div>`:""}</section>`;
+  el.onclick=e=>{const a=e.target.closest("button");if(!a)return;const k=a.dataset.a;
+    if(k==="bp"){S.bar=Math.min(BAR,(S.bar||0)+1);S.msg=S.bar>=BAR?"¡Los bárbaros llegan a Catan! Resuelve el ataque.":""}
+    else if(k==="bm"){S.bar=Math.max(0,(S.bar||0)-1);S.msg=""}
+    else if(k==="br")return resolve();
+    draw()}}
+$("m_cc").onchange=e=>{S.cc=e.target.checked?1:0;draw()};
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+$("n").onchange=e=>{S.n=+e.target.value;draw()};
+$("tm").onclick=()=>{if(target()>3)S.adj=(S.adj||0)-1;draw()};
+$("tp").onclick=()=>{S.adj=(S.adj||0)+1;draw()};
+$("m_sea").onchange=e=>{S.sea=e.target.checked?1:0;draw()};
+document.querySelectorAll("[data-m]").forEach(c=>c.onchange=e=>{const k=c.dataset.m;S.m[k]=c.checked?1:0;if(k==="port"&&!S.m.port)S.hold.port=-1;if(k==="two"&&c.checked)S.n=2;draw()});
+$("g").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.k){const p=S.p[+b.dataset.i],k=b.dataset.k;p[k]=Math.max(0,(p[k]||0)+ +b.dataset.d);for(const L of[1,2,3])p["a"+L]=Math.min(p["a"+L]||0,p["k"+L]||0);if(S.cc){p.m=Math.min(p.m||0,p.c);p.w=Math.min(p.w||0,p.c)}}
+  else if(b.dataset.h){const i=+b.dataset.i,h=b.dataset.h;S.hold[h]=S.hold[h]===i?-1:i}
+  draw()});
+$("g").addEventListener("input",e=>{if(e.target.dataset.name!==undefined){const i=+e.target.dataset.name;S.p[i].name=e.target.value;const t=document.querySelector(`#tab${i} .tn`);if(t)t.textContent=e.target.value;save()}});
+const goTab=(i,focus)=>{S.tab=(i+S.n)%S.n;draw();if(focus)$("tab"+S.tab).focus()};
+$("tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(b)goTab(+b.dataset.t)});
+$("tabs").addEventListener("keydown",e=>{const k={ArrowRight:1,ArrowLeft:-1}[e.key];if(k){e.preventDefault();goTab(S.tab+k,true)}else if(e.key==="Home"){e.preventDefault();goTab(0,true)}else if(e.key==="End"){e.preventDefault();goTab(S.n-1,true)}});
+let sx=null,sy=0;
+$("g").addEventListener("touchstart",e=>{if(e.target.closest("input"))return;sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+$("g").addEventListener("touchend",e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)goTab(S.tab+(dx<0?1:-1))},{passive:true});
+let armed=0;
+$("rs").onclick=e=>{if(!armed){armed=1;e.target.textContent="Toca otra vez para confirmar";setTimeout(()=>{armed=0;$("rs").textContent="Nueva partida"},3000);return}
+  armed=0;$("rs").textContent="Nueva partida";if(!newTrialGame())return;S.p=[0,1,2,3,4,5].map(blank);S.hold={road:-1,army:-1,port:-1};S.bar=0;S.msg="";S.sc="Catan normal (3-6 jug.)";S.n=3;S.adj=0;S.cc=0;S.sea=0;S.m={};S.tab=0;$("mods").open=false;draw();scrollTo({top:0,behavior:"smooth"})};
+
+/* ===== Licencia y entrada ===== */
+const LICENSE_KEY="CATAN-PENTECH-2026";        // ← cambia aquí la clave
+const BUY_URL="https://buymeacoffee.com/pentech"; // ← pon aquí el enlace de compra
+const TRIAL_MAX=3;
+const LK="catan-licencia-v1",TK="catan-prueba-v1";
+const ls={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+const norm=v=>String(v||"").trim().toUpperCase().replace(/\s+/g,"");
+const licensed=()=>ls.get(LK)===norm(LICENSE_KEY);
+const used=()=>+(ls.get(TK)||0);
+let trial=false;
+function trialUI(){const b=$("trialbar");if(!trial){b.className="trialbar";return}
+  const left=TRIAL_MAX-used();b.className="trialbar on";
+  b.innerHTML=`Versión de prueba: partida ${used()} de ${TRIAL_MAX}. ${left>0?`Te queda${left>1?"n":""} ${left}.`:"Es la última."}`}
+function newTrialGame(){if(!trial)return true;
+  if(used()>=TRIAL_MAX){showLic(true);return false}
+  ls.set(TK,used()+1);trialUI();return true}
+function showLic(ended){const left=TRIAL_MAX-used();
+  $("licMsg").textContent=ended?"Se han acabado las 3 partidas de prueba. Consigue tu clave para seguir usando el contador sin límites.":"Introduce tu clave de licencia para desbloquear el contador. Si aún no la tienes, puedes probarlo gratis durante 3 partidas.";
+  $("licTry").hidden=left<=0;
+  $("licLeft").textContent=left>0?`Partidas de prueba disponibles: ${left} de ${TRIAL_MAX}`:"";
+  $("licErr").textContent="";$("lic").hidden=false;$("lic").classList.remove("out")}
+function enterApp(){$("lic").classList.add("out");setTimeout(()=>{$("lic").hidden=true},500);trialUI()}
+$("licGo").onclick=()=>{if(norm($("licKey").value)===norm(LICENSE_KEY)){ls.set(LK,norm(LICENSE_KEY));trial=false;enterApp()}else{$("licErr").textContent="Clave incorrecta. Revísala e inténtalo de nuevo."}};
+$("licKey").onkeydown=e=>{if(e.key==="Enter")$("licGo").click()};
+$("licBuy").onclick=()=>window.open(BUY_URL,"_blank","noopener");
+$("licTry").onclick=()=>{trial=true;
+  if(ls.get(TK+"-activa")!=="1"||used()===0){if(used()>=TRIAL_MAX)return showLic(true);ls.set(TK,used()+1);ls.set(TK+"-activa","1")}
+  enterApp()};
+/* Melodía original: tema de aventura con laúd y bordón */
+let actx;
+function melody(){try{try{if(navigator.audioSession)navigator.audioSession.type="playback"}catch(e){}actx=actx||new (window.AudioContext||window.webkitAudioContext)();const c=actx;if(c.state==="suspended")c.resume();
+  const t0=c.currentTime+.05,master=c.createGain();master.gain.value=.22;master.connect(c.destination);
+  const f=n=>440*Math.pow(2,(n-69)/12);
+  const pluck=(n,t,d,v=1)=>{const o=c.createOscillator(),o2=c.createOscillator(),g=c.createGain(),lp=c.createBiquadFilter();
+    o.type="triangle";o2.type="sawtooth";o.frequency.value=f(n);o2.frequency.value=f(n)*1.003;lp.type="lowpass";lp.frequency.setValueAtTime(3200,t);lp.frequency.exponentialRampToValueAtTime(700,t+d);
+    const g2=c.createGain();g2.gain.value=.25;o2.connect(g2);g2.connect(lp);o.connect(lp);lp.connect(g);g.connect(master);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.55*v,t+.012);g.gain.exponentialRampToValueAtTime(.001,t+d);
+    o.start(t);o2.start(t);o.stop(t+d+.05);o2.stop(t+d+.05)};
+  const drone=(n,t,d)=>{const o=c.createOscillator(),g=c.createGain();o.type="sine";o.frequency.value=f(n);o.connect(g);g.connect(master);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.6);g.gain.setValueAtTime(.18,t+d-1);g.gain.linearRampToValueAtTime(0,t+d);o.start(t);o.stop(t+d+.1)};
+  const b=.27; // duración de corchea
+  const mel=[[62,1],[69,1],[67,.5],[66,.5],[67,1],[69,2],[74,1],[72,.5],[71,.5],[69,1],[67,1],[69,3],
+             [62,1],[69,1],[67,.5],[69,.5],[71,1],[72,2],[71,1],[69,.5],[67,.5],[66,1],[64,1],[62,4]];
+  let t=t0;mel.forEach(([n,d])=>{pluck(n,t,Math.max(.35,d*b*2.2));if(d>=2)pluck(n-12,t,d*b*2,.5);t+=d*b*2});
+  drone(50,t0,t-t0+.8);drone(57,t0,t-t0+.8);
+  [[50,0],[48,6],[50,12],[55,18],[50,24]].forEach(([n,beat])=>pluck(n,t0+beat*b*2,1.2,.6));
+}catch(e){}}
+function start(){const sp=$("splash");if(sp.classList.contains("out"))return;melody();sp.classList.add("out");setTimeout(()=>{sp.hidden=true},500);
+  if(licensed()){trial=false;trialUI()}else showLic(used()>=TRIAL_MAX)}
+$("splash").onclick=start;$("splash").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();start()}};
+
+draw();
+try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock("portrait").catch(()=>{})}catch(e){}
+if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+</script>
+</body>
+</html>
