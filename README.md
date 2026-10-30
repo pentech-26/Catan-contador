@@ -1,2 +1,2 @@
-# Catan-contador
+# Catan Contador
 Contador para el juego de mesa Catan
