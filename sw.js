@@ -1,4 +1,4 @@
-const CACHE="catan-contador-v24";
+const CACHE="catan-contador-v25";
 const FILES=["./","index.html","manifest.json","icon-192.png","icon-512.png","apple-touch-icon.png","favicon-32.png","splash.webp","icon-48.png","icon-72.png","icon-96.png","icon-144.png","icon-maskable-192.png","icon-maskable-512.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)));self.skipWaiting()});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==CACHE).map(x=>caches.delete(x)))));self.clients.claim()});
