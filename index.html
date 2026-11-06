@@ -36,16 +36,18 @@ select,input[type=text]{font:inherit;color:var(--ink);background:var(--btn);bord
 .target{display:flex;align-items:center;gap:8px}
 .target b{font:900 32px/1 "Cinzel",Georgia,serif;min-width:2ch;text-align:center;color:var(--red)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .target b{color:var(--gold)}}
+:root[data-theme="dark"] .target b{color:var(--gold)}
 .mods{width:100%;padding-top:10px;border-top:1px dashed var(--line);font-size:14px}
 .mods summary{cursor:pointer;font:700 16px/1.3 "Cinzel",Georgia,serif;color:var(--red);padding:4px 0;list-style-position:inside}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .mods summary{color:var(--gold)}}
+:root[data-theme="dark"] .mods summary{color:var(--gold)}
 .mods summary .cnt{font:800 12px "Nunito Sans",sans-serif;color:var(--mute);margin-left:6px}
 .mg{margin-top:10px}
 .mg h3{margin:0 0 6px;font:800 12px/1.2 "Nunito Sans",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
 .mg div{display:flex;flex-wrap:wrap;gap:6px 16px}
 .mg label{display:flex;flex-direction:row;align-items:center;color:var(--ink);gap:6px;font-size:14px}
 .mg label em{font-style:normal;color:var(--mute);font-size:12px}
-.mg[hidden]{display:none}
+.mg[hidden],.mg label[hidden]{display:none}
 .warn{margin-top:8px;padding:8px 10px;border-radius:10px;background:var(--btn);border-left:5px solid var(--gold2);font-size:13px;color:var(--ink)}
 .warn:empty{display:none}
 input[type=checkbox]{accent-color:var(--red);width:18px;height:18px}
@@ -60,6 +62,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid 
 #scl[hidden]{display:none}
 .gt{font:700 15px/1.2 "Cinzel",Georgia,serif;color:var(--red);padding:12px 12px 6px;border-top:1px solid var(--line);background:var(--btn)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .gt{color:var(--gold)}}
+:root[data-theme="dark"] .gt{color:var(--gold)}
 .gt:first-child{border-top:0}
 .op{display:flex;width:100%;justify-content:space-between;gap:12px;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;font-weight:600;text-align:left;padding:8px 12px;min-height:38px}
 .op span:last-child{color:var(--mute);font-size:14px}
@@ -106,6 +109,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid 
 #rs{background:var(--red);color:#fff6e0;border-color:var(--red);font:900 22px/1 "Cinzel",Georgia,serif;padding:16px 40px;min-height:58px;min-width:min(100%,320px);border-radius:999px;box-shadow:0 6px 18px rgba(120,20,0,.3)}
 #rs:hover{background:#c4280f}
 .legal{text-align:center;color:var(--mute);font-size:12px;line-height:1.5;margin:18px 0 6px;padding:10px;background:var(--card);border-radius:12px;opacity:.9}
+.legal .ver{display:block;margin-top:8px;font-weight:800;letter-spacing:.06em}
 .hint{margin:14px 0 0 !important;color:var(--mute);background:var(--card);border-radius:12px;padding:10px 12px;font-size:13px;margin-top:10px}
 button:disabled{opacity:.45;cursor:default}
 .cc{margin-top:14px;padding:14px;border-left:8px solid #2b2b33}
@@ -114,6 +118,7 @@ button:disabled{opacity:.45;cursor:default}
 .pips i{flex:1;height:22px;border-radius:6px;background:linear-gradient(180deg,#7cc6ec,var(--accent));opacity:.45}
 .pips i.on{background:#2b2b33;opacity:1}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .pips i.on{background:#e8e0d0}}
+:root[data-theme="dark"] .pips i.on{background:#e8e0d0}
 .vs{display:flex;gap:20px;flex-wrap:wrap;align-items:baseline;font:900 24px/1.2 "Cinzel",Georgia,serif}
 .vs small{font:600 14px "Nunito Sans",sans-serif;color:var(--mute)}
 .res{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--btn);border-left:6px solid var(--accent)}
@@ -125,8 +130,14 @@ button:disabled{opacity:.45;cursor:default}
 .scr[hidden]{display:none}
 .scr.out{opacity:0;pointer-events:none}
 #splash{cursor:pointer}
-#splash{background:#9f0107 url(splash.webp) center bottom/100% auto no-repeat;justify-content:flex-start;padding-top:calc(14vh + env(safe-area-inset-top,0px));animation:fadein .8s ease-out both}
-@media (min-aspect-ratio:9/16){#splash{background-size:contain;background-position:center}}
+#splash{background:#9f0107;justify-content:flex-start;padding-top:calc(14vh + env(safe-area-inset-top,0px));animation:fadein .8s ease-out both}
+#splash{--H:100vh;--w:min(100vw,calc(var(--H)*.5629));--h:calc(var(--w)*1.7767)}
+@supports (height:100dvh){#splash{--H:100dvh}}
+#splash .tap{position:absolute;z-index:2;left:0;right:0;margin:0 auto;width:max-content;max-width:92vw;white-space:nowrap;top:auto;bottom:calc(max(6vh,28px) + env(safe-area-inset-bottom,0px));box-shadow:0 8px 24px rgba(0,0,0,.55)!important;font-size:clamp(12px,3.9vw,16px)!important;letter-spacing:.2em!important;padding:15px clamp(18px,6vw,30px)!important;min-height:54px}
+.spw{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:var(--w);aspect-ratio:900/1599;pointer-events:none}
+.spw img{display:block;width:100%;height:100%}
+.spt{position:absolute;left:0;right:0;top:31.5%;display:flex;align-items:center;justify-content:center;gap:calc(var(--w)*.035);font:900 calc(var(--w)*.085)/1 "Nunito Sans",system-ui,sans-serif;letter-spacing:.06em;color:#fff6e0;text-shadow:0 calc(var(--w)*.004) calc(var(--w)*.012) rgba(60,0,0,.6);white-space:nowrap}
+.spt::before,.spt::after{content:"";width:calc(var(--w)*.11);height:calc(var(--w)*.011);border-radius:99px;background:#fff6e0;box-shadow:0 calc(var(--w)*.003) calc(var(--w)*.01) rgba(60,0,0,.5)}
 #splash .tap{font:800 15px/1.2 "Nunito Sans",sans-serif;letter-spacing:.28em;text-transform:uppercase;color:#3b1508;background:rgba(255,246,224,.85);padding:12px 22px;border-radius:999px;animation:pulse 1.6s ease-in-out infinite}
 #splash .tap{box-shadow:0 6px 20px rgba(0,0,0,.4);background:linear-gradient(180deg,#ffe470,#e39a0b);border:2px solid #fff2a0;font-size:16px;padding:16px 30px;min-height:56px;cursor:pointer}
 @keyframes fadein{from{opacity:0}}
@@ -150,194 +161,535 @@ button:disabled{opacity:.45;cursor:default}
 #rot span{font-size:15px;font-weight:700}
 @keyframes turn{0%,20%{transform:rotate(90deg)}60%,100%{transform:rotate(0)}}
 @media (orientation:landscape) and (max-height:540px) and (pointer:coarse){#rot{display:flex}body{overflow:hidden}}
+.hero div{position:relative}
+.hero h1{padding:46px 0 0}
+.hbtn{z-index:2;position:absolute;top:12px;width:44px;height:44px;min-height:44px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,246,224,.16);border:1.5px solid rgba(255,246,224,.55);color:#fff6e0}
+.hbtn:hover:not(:disabled){background:rgba(255,246,224,.3)}
+.hbtn svg{width:22px;height:22px}
+.hbtn.l{left:12px}.hbtn.r{right:12px}.hbtn.r2{right:64px}
+.hbtn .sun{display:none}
+:root[data-theme="dark"] .hbtn .moon{display:none}:root[data-theme="dark"] .hbtn .sun{display:block}
+.scr .hbtn{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));transform:none}
+.modal{position:fixed;inset:0;z-index:150;display:flex;align-items:center;justify-content:center;background:rgba(40,8,0,.55);padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.modal[hidden]{display:none}
+.sheet{background:var(--card);color:var(--ink);border-radius:20px;width:min(100%,480px);max-height:100%;overflow-y:auto;padding:18px 16px;box-shadow:0 20px 50px rgba(40,8,0,.5);border-top:6px solid var(--gold2)}
+.sheet h2{margin:0 0 12px;text-align:center;font:900 24px/1.2 "Cinzel",Georgia,serif;color:var(--red)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .sheet h2{color:var(--gold)}}
+:root[data-theme="dark"] .sheet h2{color:var(--gold)}
+.langs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.langs button{min-height:48px;font-size:16px}
+.langs button[aria-pressed=true],.endb{background:linear-gradient(180deg,#ffe470,var(--gold2));color:#3b1508;border-color:#b5700a}
+.vic .sub{text-align:center;color:var(--mute);font-size:14px;margin:-4px 0 12px}
+.rank{list-style:none;margin:0 0 10px;padding:0;display:flex;flex-direction:column;gap:6px}
+.rank li{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--btn);border-left:8px solid var(--c)}
+.rank li.first{background:linear-gradient(180deg,#ffe470,var(--gold2));color:#3b1508}
+.rank .po{font:900 16px "Cinzel",Georgia,serif;min-width:3ch}
+.rank .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:800}
+.rank .pt{font:900 24px "Cinzel",Georgia,serif}
+.acts{display:flex;flex-direction:column;gap:8px}
+.ok{text-align:center;font-size:13px;color:var(--mute);margin:0 0 12px}
+.arch{display:flex;flex-direction:column;gap:10px}
+.ac{border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--btn)}
+.ac .dt{font-size:12px;color:var(--mute)}
+.ac .sn2{font:700 18px/1.2 "Cinzel",Georgia,serif;margin:2px 0 4px}
+.ac .wn{font-weight:800;margin-top:4px}
+.chips2{display:flex;flex-wrap:wrap;gap:4px}
+.chips2 span{font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;background:var(--card);border:1px solid var(--line)}
+.ac .row2{display:flex;gap:8px;margin-top:8px}
+.ac .row2 button{flex:1;min-height:38px;font-size:14px;background:var(--card)}
+.det{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.det[hidden]{display:none}
+.dp{border-left:6px solid var(--c);padding:6px 10px;background:var(--card);border-radius:8px}
+.dp b{display:flex;justify-content:space-between;gap:8px}
+.dp small{display:block;color:var(--mute);font-size:12px;line-height:1.45;margin-top:2px}
+#cf{position:fixed;inset:0;z-index:160;pointer-events:none}
+#rsw{flex-direction:column;align-items:center;gap:10px}
+#eg{font:900 20px/1 "Cinzel",Georgia,serif;padding:15px 36px;min-height:56px;min-width:min(100%,320px);border-radius:999px;box-shadow:0 6px 18px rgba(200,120,0,.3)}
+.banner button{display:block;margin:10px auto 0;font:900 16px/1 "Cinzel",Georgia,serif;background:#a3120c;color:#fff6e0;border:0;border-radius:999px;padding:12px 22px;min-height:44px}
 </style>
+<script>(function(){var m="light";try{var s=localStorage.getItem("catan-tema");if(s==="dark"||s==="light")m=s;else if(matchMedia("(prefers-color-scheme: dark)").matches)m="dark"}catch(e){}document.documentElement.setAttribute("data-theme",m)})();</script>
 </head>
 <body>
 <div id="rot" role="alert" aria-live="assertive">
   <svg viewBox="0 0 24 24" fill="none" stroke="#fff6e0" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><line x1="11" y1="18.5" x2="13" y2="18.5"/></svg>
-  <b>Gira el móvil</b>
-  <span>El contador se usa en vertical</span>
+  <b data-i="rotT">Gira el móvil</b>
+  <span data-i="rotS">El contador se usa en vertical</span>
 </div>
-<div id="splash" class="scr" aria-label="Contador de Catan">
-  <button class="tap" id="tapBtn" type="button">Toca para empezar</button>
+<div id="splash" class="scr" data-ia="title" aria-label="Contador de Catan">
+  <div class="spw" aria-hidden="true"><img src="splash.webp" alt=""><div class="spt" data-i="splashWord">CONTADOR</div></div>
+  <button class="tap" id="tapBtn" type="button" data-i="tap">Toca para empezar</button>
 </div>
 <div id="lic" class="scr" hidden>
-  <h2>Contador de Catan</h2>
+  <button class="hbtn l lg" type="button" data-ia="lang" aria-label="Idioma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/></svg></button>
+  <h2 data-i="licTitle">Contador de Catan</h2>
   <div class="box">
-    <p id="licMsg">Introduce tu clave de licencia para desbloquear el contador.</p>
-    <input id="licKey" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="TU CLAVE" aria-label="Clave de licencia">
+    <p id="licMsg"></p>
+    <input id="licKey" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" data-ip="licPh" data-ia="licAria">
     <div class="err" id="licErr" role="alert"></div>
-    <button class="big" id="licGo">Desbloquear</button>
-    <button class="big gold" id="licBuy">Comprar clave</button>
-    <button class="big ghost" id="licTry">Probar gratis</button>
+    <button class="big" id="licGo" data-i="licGo">Desbloquear</button>
+    <button class="big gold" id="licBuy" data-i="licBuy">Comprar clave</button>
+    <button class="big ghost" id="licTry" data-i="licTry">Probar gratis</button>
     <p id="licLeft" style="font-size:13px"></p>
   </div>
 </div>
-<header class="hero"><div><h1>Contador de Catan<small>Puntos de victoria</small></h1></div></header>
+<header class="hero"><div>
+  <button class="hbtn l lg" type="button" data-ia="lang" aria-label="Idioma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/></svg></button>
+  <h1><span data-i="title">Contador de Catan</span><small data-i="sub">Puntos de victoria</small></h1>
+  <button class="hbtn r2" id="themeBtn" type="button" data-ia="theme" aria-label="Día / noche"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
+  <button class="hbtn r" id="archBtn" type="button" data-ia="archive" aria-label="Archivo de partidas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M8 10h8M8 14h8M8 18h5"/></svg></button>
+</div></header>
 <main>
 <section class="bar">
-  <label>Jugadores<select id="n"></select></label>
-  <div class="dd"><span id="scn">Escenario</span><button id="sc" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="scn sc"></button><div id="scl" role="listbox" aria-labelledby="scn" hidden></div></div>
-  <div class="target" aria-label="Puntos para ganar">
-    <button class="sq" id="tm" aria-label="Bajar objetivo">−</button>
-    <label style="align-items:center">PV para ganar<b id="tv"></b></label>
-    <button class="sq" id="tp" aria-label="Subir objetivo">+</button>
+  <label><span data-i="players">Jugadores</span><select id="n"></select></label>
+  <div class="dd"><span id="scn" data-i="scenario">Escenario</span><button id="sc" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="scn sc"></button><div id="scl" role="listbox" aria-labelledby="scn" hidden></div></div>
+  <div class="target">
+    <button class="sq" id="tm" data-ia="tgtDown" aria-label="Bajar objetivo">−</button>
+    <label style="align-items:center"><span data-i="target">PV para ganar</span><b id="tv"></b></label>
+    <button class="sq" id="tp" data-ia="tgtUp" aria-label="Subir objetivo">+</button>
   </div>
   <details class="mods" id="mods">
-    <summary>Expansiones y variantes<span class="cnt" id="mcnt"></span></summary>
-    <div class="mg" id="g_exp"><h3>Expansiones combinables</h3><div>
-      <label><input type="checkbox" id="m_cc"> Ciudades y Caballeros</label>
-      <label id="l_sea"><input type="checkbox" id="m_sea"> Navegantes <em>(barcos)</em></label>
+    <summary><span data-i="mods">Expansiones y variantes</span><span class="cnt" id="mcnt"></span></summary>
+    <div class="mg" id="g_exp"><h3 data-i="gExp"></h3><div>
+      <label><input type="checkbox" id="m_cc"> <span data-i="x_cc"></span> <em data-i="ccNote"></em></label>
+      <label id="l_sea"><input type="checkbox" id="m_sea"> <span data-i="x_sea"></span> <em data-i="seaNote"></em></label>
     </div></div>
-    <div class="mg"><h3>Variantes que suman PV</h3><div>
-      <label><input type="checkbox" data-m="port"> Maestro portuario <em>+1 PV · carta de 2 PV</em></label>
-      <label><input type="checkbox" data-m="wall"> Murallas de la ciudad <em>+1 PV</em></label>
-      <label><input type="checkbox" data-m="spec"> Especialistas <em>+2 PV</em></label>
+    <div class="mg"><h3 data-i="gPv"></h3><div>
+      <label><input type="checkbox" data-m="port"> <span data-i="v_port"></span> <em data-i="portNote"></em></label>
+      <label id="l_wall"><input type="checkbox" data-m="wall"> <span data-i="v_wall"></span> <em class="p1"></em></label>
+      <label id="l_spec"><input type="checkbox" data-m="spec"> <span data-i="v_spec"></span> <em class="p2"></em></label>
+      <label id="l_carav"><input type="checkbox" data-m="carav"> <span data-i="v_carav"></span> <em data-i="caravNote"></em></label>
     </div></div>
-    <div class="mg"><h3>Otras variantes</h3><div>
-      <label><input type="checkbox" data-m="jungle"> En la Jungla</label>
-      <label><input type="checkbox" data-m="volc"> Volcanes</label>
-      <label><input type="checkbox" data-m="events"> Eventos de Catan</label>
-      <label><input type="checkbox" data-m="castles"> Castillos</label>
-      <label><input type="checkbox" data-m="magic7"> El 7 Mágico</label>
-      <label><input type="checkbox" data-m="friendly"> Ladrón Amistoso</label>
-      <label><input type="checkbox" data-m="two"> Catan para 2</label>
+    <div class="mg"><h3 data-i="gOther"></h3><div>
+      <label><input type="checkbox" data-m="jungle"> <span data-i="v_jungle"></span></label>
+      <label><input type="checkbox" data-m="volc"> <span data-i="v_volc"></span></label>
+      <label><input type="checkbox" data-m="events"> <span data-i="v_events"></span></label>
+      <label><input type="checkbox" data-m="castles"> <span data-i="v_castles"></span></label>
+      <label><input type="checkbox" data-m="magic7"> <span data-i="v_magic7"></span></label>
+      <label><input type="checkbox" data-m="friendly"> <span data-i="v_friendly"></span></label>
+      <label id="l_fish"><input type="checkbox" data-m="fish"> <span data-i="v_fish"></span></label>
+      <label><input type="checkbox" data-m="two"> <span data-i="v_two"></span> <em data-i="twoNote"></em></label>
     </div></div>
-    <div class="mg" id="g_wonders" hidden><h3>Las Maravillas</h3><div>
-      <label><input type="checkbox" data-m="won11"> Ganar con 11 PV <em>(o al acabar la maravilla)</em></label>
+    <div class="mg" id="g_wonders" hidden><h3 data-i="gWon"></h3><div>
+      <label><input type="checkbox" data-m="won11"> <span data-i="v_won11"></span> <em data-i="won11Note"></em></label>
     </div></div>
-    <div class="mg" id="g_ccv" hidden><h3>Variantes de Ciudades y Caballeros</h3><div>
-      <label><input type="checkbox" data-m="ccmore"> Más de 4 jugadores</label>
-      <label><input type="checkbox" data-m="ccatk"> Variante de los ataques</label>
-      <label><input type="checkbox" data-m="ccerr"> Caballero errante</label>
-      <label><input type="checkbox" data-m="cceasy"> Comienzo fácil</label>
+    <div class="mg" id="g_ccv" hidden><h3 data-i="gCcv"></h3><div>
+      <label><input type="checkbox" data-m="ccmore"> <span data-i="v_ccmore"></span></label>
+      <label><input type="checkbox" data-m="ccatk"> <span data-i="v_ccatk"></span></label>
+      <label><input type="checkbox" data-m="ccerr"> <span data-i="v_ccerr"></span></label>
+      <label><input type="checkbox" data-m="cceasy"> <span data-i="v_cceasy"></span></label>
     </div></div>
     <div class="warn" id="mwarn"></div>
   </details>
 </section>
-<p class="hint">Gana quien llega al objetivo en su turno. Las cartas de 2 PV (Ruta Comercial, Gran Ejército, Maestro portuario) las tiene un solo jugador a la vez. «Extras» sirve para PVE, metrópolis, Defensor de Catan, fichas de pueblo y cualquier otro punto de mapa.</p>
+<p class="hint" data-i="hint"></p>
 <div id="ban"></div>
 <div id="cc"></div>
 <div class="stick">
 <div class="scen" id="scen" aria-live="polite"></div>
-<p class="swipe">Desliza la tarjeta o toca una pestaña para cambiar de jugador</p>
-<nav class="tabs" id="tabs" role="tablist" aria-label="Jugadores"></nav>
+<p class="swipe" data-i="swipe"></p>
+<nav class="tabs" id="tabs" role="tablist" data-ia="players"></nav>
 </div>
 <section class="grid" id="g"></section>
 <div class="trialbar" id="trialbar"></div>
 <div class="foot" id="rsw">
-  <button id="rs">Nueva partida</button>
+  <button id="eg" class="endb" data-i="endGame">Terminar partida</button>
+  <button id="rs" data-i="newGame">Nueva partida</button>
 </div>
-<footer class="legal">Contador no oficial para uso personal. CATAN es una marca registrada de CATAN GmbH; el juego está editado en España por Devir.<br>App creada por PenTech.</footer>
+<footer class="legal"><span data-ih="legal"></span><span class="ver" id="ver"></span></footer>
 </main>
+<div id="modal" class="modal" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+<canvas id="cf" hidden></canvas>
 <script>
-const G=[["Base",[["Catan normal (3-6 jug.)",10]]],
+/* ===== Idiomas ===== */
+const LANGS=["es","ca","en","fr","de","it"];
+const LN={es:"Español",ca:"Català",en:"English",fr:"Français",de:"Deutsch",it:"Italiano"};
+const COLN={es:["Rojo","Azul","Naranja","Blanco","Verde","Marrón"],ca:["Vermell","Blau","Taronja","Blanc","Verd","Marró"],en:["Red","Blue","Orange","White","Green","Brown"],fr:["Rouge","Bleu","Orange","Blanc","Vert","Marron"],de:["Rot","Blau","Orange","Weiß","Grün","Braun"],it:["Rosso","Blu","Arancione","Bianco","Verde","Marrone"]};
+const ORD={es:n=>n+"º",ca:n=>n+({1:"r",2:"n",3:"r",4:"t"}[n]||"è"),en:n=>n+({1:"st",2:"nd",3:"rd"}[n]||"th"),fr:n=>n+(n===1?"er":"e"),de:n=>n+".",it:n=>n+"º"};
+/* Nombres de grupo y escenario: la clave es el nombre en español (se guarda así en la partida) */
+const GRN={
+ ca:{"Base":"Base","Navegantes":"Navegants","Mapas":"Mapes","Tableros propios":"Taulers propis"},
+ en:{"Base":"Base game","Navegantes":"Seafarers","Mapas":"Maps","Tableros propios":"Custom boards"},
+ fr:{"Base":"Jeu de base","Navegantes":"Marins","Mapas":"Cartes","Tableros propios":"Plateaux maison"},
+ de:{"Base":"Basisspiel","Navegantes":"Seefahrer","Mapas":"Karten","Tableros propios":"Eigene Spielpläne"},
+ it:{"Base":"Gioco base","Navegantes":"Marinai","Mapas":"Mappe","Tableros propios":"Tabelloni personalizzati"}};
+const SCN={
+ ca:{"Catan normal (3-6 jug.)":"Catan normal (3-6 jug.)","Hacia las nuevas costas":"Cap a noves costes","Las islas":"Les illes","Océanos":"Oceans","El nuevo mundo":"El nou món","La gran travesía":"La gran travessia","Gran Catan":"Gran Catan","A través del desierto":"A través del desert","Las Maravillas de Catan":"Les Meravelles de Catan","Jinetes del Desierto":"Genets del Desert","Atlantis":"Atlàntida","Los especialistas":"Els especialistes","El Gran Canal":"El Gran Canal","El atolón":"L'atol","Triángulo de las Bermudas":"Triangle de les Bermudes","La Invasión Bárbara":"La Invasió Bàrbara","Mercaderes y Bárbaros":"Mercaders i Bàrbars","Los Ríos de Catan":"Els Rius de Catan","Las Colonias":"Les Colònies","Los Gremios":"Els Gremis","Alejandro el Grande":"Alexandre el Gran","Keops":"Keops","La Gran Muralla":"La Gran Muralla","Troya":"Troia","Nuremberg":"Nuremberg","La conquista del mundo":"La conquesta del món","Los pueblos marineros":"Els pobles mariners","El saqueo de Roma":"El saqueig de Roma"},
+ en:{"Catan normal (3-6 jug.)":"Standard Catan (3-6 pl.)","Hacia las nuevas costas":"Heading for New Shores","Las islas":"The Islands","Océanos":"Oceans","El nuevo mundo":"The New World","La gran travesía":"The Great Crossing","Gran Catan":"Greater Catan","A través del desierto":"Through the Desert","Las Maravillas de Catan":"The Wonders of Catan","Jinetes del Desierto":"Desert Riders","Atlantis":"Atlantis","Los especialistas":"The Specialists","El Gran Canal":"The Great Canal","El atolón":"The Atoll","Triángulo de las Bermudas":"Bermuda Triangle","La Invasión Bárbara":"Barbarian Invasion","Mercaderes y Bárbaros":"Traders & Barbarians","Los Ríos de Catan":"The Rivers of Catan","Las Colonias":"The Colonies","Los Gremios":"The Guilds","Alejandro el Grande":"Alexander the Great","Keops":"Cheops","La Gran Muralla":"The Great Wall","Troya":"Troy","Nuremberg":"Nuremberg","La conquista del mundo":"World Conquest","Los pueblos marineros":"The Sea Peoples","El saqueo de Roma":"The Sack of Rome"},
+ fr:{"Catan normal (3-6 jug.)":"Catan classique (3-6 j.)","Hacia las nuevas costas":"Vers de nouveaux rivages","Las islas":"Les îles","Océanos":"Océans","El nuevo mundo":"Le Nouveau Monde","La gran travesía":"La grande traversée","Gran Catan":"Grand Catan","A través del desierto":"À travers le désert","Las Maravillas de Catan":"Les Merveilles de Catane","Jinetes del Desierto":"Les Cavaliers du désert","Atlantis":"Atlantide","Los especialistas":"Les Spécialistes","El Gran Canal":"Le Grand Canal","El atolón":"L'Atoll","Triángulo de las Bermudas":"Le Triangle des Bermudes","La Invasión Bárbara":"L'Invasion barbare","Mercaderes y Bárbaros":"Marchands & Barbares","Los Ríos de Catan":"Les Fleuves de Catane","Las Colonias":"Les Colonies","Los Gremios":"Les Guildes","Alejandro el Grande":"Alexandre le Grand","Keops":"Khéops","La Gran Muralla":"La Grande Muraille","Troya":"Troie","Nuremberg":"Nuremberg","La conquista del mundo":"La Conquête du monde","Los pueblos marineros":"Les Peuples de la mer","El saqueo de Roma":"Le Sac de Rome"},
+ de:{"Catan normal (3-6 jug.)":"Standard-Catan (3-6 Sp.)","Hacia las nuevas costas":"Neue Ufer","Las islas":"Die Inseln","Océanos":"Ozeane","El nuevo mundo":"Die neue Welt","La gran travesía":"Die große Überfahrt","Gran Catan":"Groß-Catan","A través del desierto":"Durch die Wüste","Las Maravillas de Catan":"Die Weltwunder von Catan","Jinetes del Desierto":"Die Wüstenreiter","Atlantis":"Atlantis","Los especialistas":"Die Spezialisten","El Gran Canal":"Der große Kanal","El atolón":"Das Atoll","Triángulo de las Bermudas":"Das Bermudadreieck","La Invasión Bárbara":"Die Barbaren-Invasion","Mercaderes y Bárbaros":"Händler & Barbaren","Los Ríos de Catan":"Die Flüsse von Catan","Las Colonias":"Die Kolonien","Los Gremios":"Die Zünfte","Alejandro el Grande":"Alexander der Große","Keops":"Cheops","La Gran Muralla":"Die Große Mauer","Troya":"Troja","Nuremberg":"Nürnberg","La conquista del mundo":"Die Eroberung der Welt","Los pueblos marineros":"Die Seevölker","El saqueo de Roma":"Die Plünderung Roms"},
+ it:{"Catan normal (3-6 jug.)":"Catan classico (3-6 gioc.)","Hacia las nuevas costas":"Verso nuove sponde","Las islas":"Le isole","Océanos":"Oceani","El nuevo mundo":"Il Nuovo Mondo","La gran travesía":"La grande traversata","Gran Catan":"Grande Catan","A través del desierto":"Attraverso il deserto","Las Maravillas de Catan":"Le Meraviglie di Catan","Jinetes del Desierto":"I Cavalieri del deserto","Atlantis":"Atlantide","Los especialistas":"Gli specialisti","El Gran Canal":"Il Grande Canale","El atolón":"L'atollo","Triángulo de las Bermudas":"Il Triangolo delle Bermuda","La Invasión Bárbara":"L'invasione barbarica","Mercaderes y Bárbaros":"Mercanti e Barbari","Los Ríos de Catan":"I Fiumi di Catan","Las Colonias":"Le Colonie","Los Gremios":"Le Gilde","Alejandro el Grande":"Alessandro Magno","Keops":"Cheope","La Gran Muralla":"La Grande Muraglia","Troya":"Troia","Nuremberg":"Norimberga","La conquista del mundo":"La conquista del mondo","Los pueblos marineros":"I Popoli del Mare","El saqueo de Roma":"Il sacco di Roma"}};
+const T={
+es:{splashWord:"CONTADOR",theme:"Modo día / noche",rotT:"Gira el móvil",rotS:"El contador se usa en vertical",tap:"Toca para empezar",licTitle:"Contador de Catan",
+ licMsg:"Introduce tu clave de licencia para desbloquear el contador. Si aún no la tienes, puedes probarlo gratis durante 3 partidas.",
+ licEnded:"Se han acabado las 3 partidas de prueba. Consigue tu clave para seguir usando el contador sin límites.",
+ licPh:"TU CLAVE",licAria:"Clave de licencia",licGo:"Desbloquear",licBuy:"Comprar clave",licTry:"Probar gratis",
+ licLeft:v=>`Partidas de prueba disponibles: ${v.n} de ${v.m}`,licErr:"Clave incorrecta. Revísala e inténtalo de nuevo.",
+ title:"Contador de Catan",sub:"Puntos de victoria",lang:"Idioma",archive:"Archivo de partidas",
+ players:"Jugadores",scenario:"Escenario",target:"PV para ganar",tgtDown:"Bajar objetivo",tgtUp:"Subir objetivo",
+ mods:"Expansiones y variantes",active:v=>v.n===1?"(1 activa)":`(${v.n} activas)`,
+ gExp:"Expansiones combinables",ccNote:"13 PV en el mapa base",seaNote:"(barcos)",gPv:"Variantes que cambian los PV",portNote:"+1 PV · carta de 2 PV",caravNote:"se juega a 12 PV",gOther:"Otras variantes",twoNote:"2 jugadores",gWon:"Las Maravillas",won11Note:"(o al acabar la maravilla)",gCcv:"Variantes de Ciudades y Caballeros",
+ x_cc:"Ciudades y Caballeros",x_sea:"Navegantes",v_port:"Maestro portuario",v_wall:"Murallas de la ciudad",v_spec:"Especialistas",v_carav:"La Caravana",v_jungle:"En la Jungla",v_volc:"Volcanes",v_events:"Eventos de Catan",v_castles:"Castillos",v_magic7:"El 7 Mágico",v_friendly:"Ladrón Amistoso",v_fish:"Los pescadores",v_two:"Catan para 2",v_won11:"Ganar con 11 PV",v_ccmore:"Más de 4 jugadores",v_ccatk:"Variante de los ataques",v_ccerr:"Caballero errante",v_cceasy:"Comienzo fácil",
+ c_won11:"Victoria a 11 PV",c_ccmore:"C&C: más de 4",c_ccatk:"C&C: ataques",c_ccerr:"C&C: caballero errante",c_cceasy:"C&C: comienzo fácil",
+ hint:"Gana quien llega al objetivo en su turno. Las cartas de 2 PV (Gran Ruta Comercial, Gran Ejército, Maestro portuario) las tiene un solo jugador a la vez. «Extras» sirve para PVE, metrópolis, Defensor de Catan, fichas de pueblo y cualquier otro punto de mapa.",
+ swipe:"Desliza la tarjeta o toca una pestaña para cambiar de jugador",newGame:"Nueva partida",confirm:"Toca otra vez para confirmar",endGame:"Terminar partida",
+ legal:"Contador de puntos no oficial, creado de forma independiente por PenTech.<br>No está afiliado, patrocinado ni aprobado por CATAN GmbH ni por Devir.<br>CATAN es una marca registrada de CATAN GmbH. El juego está editado en España por Devir.<br>Para jugar necesitas un ejemplar del juego. La clave de licencia da acceso a esta app, no al juego.",
+ trial:v=>`Versión de prueba: partida ${v.u} de ${v.m}. `+(v.l>1?`Te quedan ${v.l}.`:v.l===1?"Te queda 1.":"Es la última."),
+ banner:v=>`¡${v.name} llega a ${v.pv} PV! Si es su turno, ha ganado.`,goal:v=>`Objetivo ${v.t} PV`,nPl:v=>`${v.n} jugadores`,
+ wSea:"Ciudades y Caballeros con Navegantes: un solo ataque bárbaro para todas las islas, las reglas de calles valen para los barcos, el oro no da mercancías y los caballeros pueden viajar en barco (se crean siempre en la isla principal). Las reglas avisan de que los mapas con zonas inexploradas o muchas islas pequeñas no van bien.",
+ wRiv:v=>`Los Ríos de Catan se juega a 12 PV con ${v.x}.`,wRivBoth:"Navegantes y Ciudades y Caballeros",wRivSea:"Navegantes (un barco en una desembocadura da 1 PV mientras siga allí)",wRivCc:"Ciudades y Caballeros (los caballeros en cruces de río no dan PV)",
+ wFish:"Los pescadores: quien tenga la bota necesita 1 PV más para ganar. El contador no lo suma: tenedlo en cuenta en la mesa.",wTwo:"Catan para 2 está pensado para 2 jugadores reales.",
+ settlements:"Poblados",cities:"Ciudades",vpCards:"Cartas de PV",extras:"Extras",each:"1 PV c/u",road:"Gran Ruta Comercial",army:"Gran Ejército",
+ nameAria:v=>`Nombre del jugador ${v.i}`,add:v=>`Añadir ${v.l}`,rem:v=>`Quitar ${v.l}`,
+ metro:"Metrópolis",metroNote:"+2 PV c/u, sobre una ciudad",walls:"Murallas",hand:v=>`mano ${v.n}`,knights:"Caballeros",knightsNote:"total · activos",basic:"Básicos",strong:"Fuertes",mighty:"Míticos",act:"act.",
+ kAdd:v=>`Añadir caballero ${v.l}`,kRem:v=>`Quitar caballero ${v.l}`,kOn:v=>`Activar ${v.l}`,kOff:v=>`Desactivar ${v.l}`,
+ barb:v=>`Bárbaros: ${v.r} de ${v.m}`,barbS:"Bárbaros",barbCities:"ciudades",defense:"Defensa",swords:"espadas activas",adv:"Avanzan (barco negro)",back:"Retroceder uno",resolve:"Resolver ataque",
+ arrive:"¡Los bárbaros llegan a Catan! Resuelve el ataque.",defWin:v=>`Ganan los defensores (${v.d} contra ${v.b}). Aplica la carta «Defensor de Catan».`,barWin:v=>`Ganan los bárbaros (${v.b} contra ${v.d}). Aportaron menos: ${v.list}.`,
+ loses:v=>`${v.name} pierde una ciudad (pasa a poblado)`,noCity:v=>`${v.name} no tiene ciudad que perder`,
+ pv:"PV",wins:v=>`¡${v.name} gana!`,tie:v=>`¡Empate a ${v.n} PV!`,noGoal:"Nadie ha llegado al objetivo",saved:"Partida guardada en el archivo",rematch:"Revancha",backGame:"Volver al contador",close:"Cerrar",
+ archEmpty:"Todavía no hay partidas guardadas. Pulsa «Terminar partida» al acabar para guardarla aquí.",view:"Ver",hide:"Ocultar",del:"Borrar",delSure:"¿Seguro? Toca otra vez",clearAll:"Vaciar archivo"},
+ca:{splashWord:"COMPTADOR",theme:"Mode dia / nit",rotT:"Gira el mòbil",rotS:"El comptador s'utilitza en vertical",tap:"Toca per començar",licTitle:"Comptador de Catan",
+ licMsg:"Introdueix la teva clau de llicència per desbloquejar el comptador. Si encara no la tens, pots provar-lo gratis durant 3 partides.",
+ licEnded:"S'han acabat les 3 partides de prova. Aconsegueix la teva clau per continuar fent servir el comptador sense límits.",
+ licPh:"LA TEVA CLAU",licAria:"Clau de llicència",licGo:"Desbloquejar",licBuy:"Comprar clau",licTry:"Provar gratis",
+ licLeft:v=>`Partides de prova disponibles: ${v.n} de ${v.m}`,licErr:"Clau incorrecta. Revisa-la i torna-ho a provar.",
+ title:"Comptador de Catan",sub:"Punts de victòria",lang:"Idioma",archive:"Arxiu de partides",
+ players:"Jugadors",scenario:"Escenari",target:"PV per guanyar",tgtDown:"Baixar objectiu",tgtUp:"Pujar objectiu",
+ mods:"Expansions i variants",active:v=>v.n===1?"(1 activa)":`(${v.n} actives)`,
+ gExp:"Expansions combinables",ccNote:"13 PV al mapa base",seaNote:"(vaixells)",gPv:"Variants que canvien els PV",portNote:"+1 PV · carta de 2 PV",caravNote:"es juga a 12 PV",gOther:"Altres variants",twoNote:"2 jugadors",gWon:"Les Meravelles",won11Note:"(o en acabar la meravella)",gCcv:"Variants de Ciutats i Cavallers",
+ x_cc:"Ciutats i Cavallers",x_sea:"Navegants",v_port:"Mestre portuari",v_wall:"Muralles de la ciutat",v_spec:"Especialistes",v_carav:"La Caravana",v_jungle:"A la Jungla",v_volc:"Volcans",v_events:"Esdeveniments de Catan",v_castles:"Castells",v_magic7:"El 7 Màgic",v_friendly:"Lladre Amistós",v_fish:"Els pescadors",v_two:"Catan per a 2",v_won11:"Guanyar amb 11 PV",v_ccmore:"Més de 4 jugadors",v_ccatk:"Variant dels atacs",v_ccerr:"Cavaller errant",v_cceasy:"Inici fàcil",
+ c_won11:"Victòria a 11 PV",c_ccmore:"C&C: més de 4",c_ccatk:"C&C: atacs",c_ccerr:"C&C: cavaller errant",c_cceasy:"C&C: inici fàcil",
+ hint:"Guanya qui arriba a l'objectiu en el seu torn. Les cartes de 2 PV (Gran Ruta Comercial, Gran Exèrcit, Mestre portuari) només les té un jugador alhora. «Extres» serveix per a PVE, metròpolis, Defensor de Catan, fitxes de poble i qualsevol altre punt de mapa.",
+ swipe:"Llisca la targeta o toca una pestanya per canviar de jugador",newGame:"Nova partida",confirm:"Toca un altre cop per confirmar",endGame:"Acabar partida",
+ legal:"Comptador de punts no oficial, creat de manera independent per PenTech.<br>No està afiliat, patrocinat ni aprovat per CATAN GmbH ni per Devir.<br>CATAN és una marca registrada de CATAN GmbH. A Espanya, el joc l'edita Devir.<br>Per jugar necessites un exemplar del joc. La clau de llicència dona accés a aquesta app, no al joc.",
+ trial:v=>`Versió de prova: partida ${v.u} de ${v.m}. `+(v.l>1?`Te'n queden ${v.l}.`:v.l===1?"Te'n queda 1.":"És l'última."),
+ banner:v=>`${v.name} arriba a ${v.pv} PV! Si és el seu torn, ha guanyat.`,goal:v=>`Objectiu ${v.t} PV`,nPl:v=>`${v.n} jugadors`,
+ wSea:"Ciutats i Cavallers amb Navegants: un sol atac bàrbar per a totes les illes, les regles dels camins valen per als vaixells, l'or no dona mercaderies i els cavallers poden viatjar en vaixell (sempre es creen a l'illa principal). Les regles avisen que els mapes amb zones inexplorades o moltes illes petites no van bé.",
+ wRiv:v=>`Els Rius de Catan es juga a 12 PV amb ${v.x}.`,wRivBoth:"Navegants i Ciutats i Cavallers",wRivSea:"Navegants (un vaixell en una desembocadura dona 1 PV mentre hi sigui)",wRivCc:"Ciutats i Cavallers (els cavallers en creuaments de riu no donen PV)",
+ wFish:"Els pescadors: qui tingui la bota necessita 1 PV més per guanyar. El comptador no ho suma: tingueu-ho en compte a la taula.",wTwo:"Catan per a 2 està pensat per a 2 jugadors reals.",
+ settlements:"Poblats",cities:"Ciutats",vpCards:"Cartes de PV",extras:"Extres",each:"1 PV c/u",road:"Gran Ruta Comercial",army:"Gran Exèrcit",
+ nameAria:v=>`Nom del jugador ${v.i}`,add:v=>`Afegir ${v.l}`,rem:v=>`Treure ${v.l}`,
+ metro:"Metròpolis",metroNote:"+2 PV c/u, sobre una ciutat",walls:"Muralles",hand:v=>`mà ${v.n}`,knights:"Cavallers",knightsNote:"total · actius",basic:"Bàsics",strong:"Forts",mighty:"Poderosos",act:"act.",
+ kAdd:v=>`Afegir cavaller ${v.l}`,kRem:v=>`Treure cavaller ${v.l}`,kOn:v=>`Activar ${v.l}`,kOff:v=>`Desactivar ${v.l}`,
+ barb:v=>`Bàrbars: ${v.r} de ${v.m}`,barbS:"Bàrbars",barbCities:"ciutats",defense:"Defensa",swords:"espases actives",adv:"Avancen (vaixell negre)",back:"Retrocedir un",resolve:"Resoldre l'atac",
+ arrive:"Els bàrbars arriben a Catan! Resol l'atac.",defWin:v=>`Guanyen els defensors (${v.d} contra ${v.b}). Aplica la carta «Defensor de Catan».`,barWin:v=>`Guanyen els bàrbars (${v.b} contra ${v.d}). Van aportar menys: ${v.list}.`,
+ loses:v=>`${v.name} perd una ciutat (passa a poblat)`,noCity:v=>`${v.name} no té cap ciutat per perdre`,
+ pv:"PV",wins:v=>`${v.name} guanya!`,tie:v=>`Empat a ${v.n} PV!`,noGoal:"Ningú ha arribat a l'objectiu",saved:"Partida desada a l'arxiu",rematch:"Revenja",backGame:"Tornar al comptador",close:"Tancar",
+ archEmpty:"Encara no hi ha partides desades. Prem «Acabar partida» quan acabeu per desar-la aquí.",view:"Veure",hide:"Amagar",del:"Esborrar",delSure:"Segur? Toca un altre cop",clearAll:"Buidar l'arxiu"},
+en:{splashWord:"COUNTER",theme:"Day / night mode",rotT:"Turn your phone",rotS:"The counter works in portrait mode",tap:"Tap to start",licTitle:"Catan Counter",
+ licMsg:"Enter your licence key to unlock the counter. If you don't have one yet, you can try it free for 3 games.",
+ licEnded:"Your 3 free trial games are over. Get your key to keep using the counter with no limits.",
+ licPh:"YOUR KEY",licAria:"Licence key",licGo:"Unlock",licBuy:"Buy a key",licTry:"Try for free",
+ licLeft:v=>`Trial games left: ${v.n} of ${v.m}`,licErr:"Wrong key. Check it and try again.",
+ title:"Catan Counter",sub:"Victory points",lang:"Language",archive:"Game archive",
+ players:"Players",scenario:"Scenario",target:"VP to win",tgtDown:"Lower target",tgtUp:"Raise target",
+ mods:"Expansions and variants",active:v=>`(${v.n} active)`,
+ gExp:"Combinable expansions",ccNote:"13 VP on the base map",seaNote:"(ships)",gPv:"Variants that change the VP",portNote:"+1 VP · 2 VP card",caravNote:"played to 12 VP",gOther:"Other variants",twoNote:"2 players",gWon:"The Wonders",won11Note:"(or by finishing the wonder)",gCcv:"Cities & Knights variants",
+ x_cc:"Cities & Knights",x_sea:"Seafarers",v_port:"Harbormaster",v_wall:"City walls",v_spec:"Specialists",v_carav:"The Caravans",v_jungle:"The Jungles",v_volc:"Volcanoes",v_events:"Event cards",v_castles:"Castles",v_magic7:"The Magic 7",v_friendly:"Friendly Robber",v_fish:"The Fishermen",v_two:"Catan for Two",v_won11:"Win with 11 VP",v_ccmore:"More than 4 players",v_ccatk:"Attack variant",v_ccerr:"Wandering knight",v_cceasy:"Easy start",
+ c_won11:"Win at 11 VP",c_ccmore:"C&K: more than 4",c_ccatk:"C&K: attacks",c_ccerr:"C&K: wandering knight",c_cceasy:"C&K: easy start",
+ hint:"Whoever reaches the target on their turn wins. The 2 VP cards (Longest Road, Largest Army, Harbormaster) belong to one player at a time. Use “Extras” for special VP, metropolises, Defender of Catan, village tokens and any other map points.",
+ swipe:"Swipe the card or tap a tab to switch player",newGame:"New game",confirm:"Tap again to confirm",endGame:"End game",
+ legal:"Unofficial score counter, created independently by PenTech.<br>Not affiliated with, sponsored or endorsed by CATAN GmbH or Devir.<br>CATAN is a registered trademark of CATAN GmbH. The game is published in Spain by Devir.<br>You need a copy of the game to play. The licence key gives access to this app, not to the game.",
+ trial:v=>`Trial version: game ${v.u} of ${v.m}. `+(v.l>0?`${v.l} left.`:"This is the last one."),
+ banner:v=>`${v.name} reaches ${v.pv} VP! If it's their turn, they win.`,goal:v=>`Target ${v.t} VP`,nPl:v=>`${v.n} players`,
+ wSea:"Cities & Knights with Seafarers: a single barbarian attack for all islands, road rules apply to ships, gold gives no commodities and knights can travel by ship (they are always built on the main island). The rules warn that maps with unexplored areas or many small islands don't work well.",
+ wRiv:v=>`The Rivers of Catan is played to 12 VP with ${v.x}.`,wRivBoth:"Seafarers and Cities & Knights",wRivSea:"Seafarers (a ship at a river mouth gives 1 VP while it stays there)",wRivCc:"Cities & Knights (knights on river crossings give no VP)",
+ wFish:"The Fishermen: whoever holds the old boot needs 1 more VP to win. The counter doesn't add it: keep it in mind at the table.",wTwo:"Catan for Two is designed for 2 real players.",
+ settlements:"Settlements",cities:"Cities",vpCards:"VP cards",extras:"Extras",each:"1 VP each",road:"Longest Road",army:"Largest Army",
+ nameAria:v=>`Player ${v.i} name`,add:v=>`Add ${v.l}`,rem:v=>`Remove ${v.l}`,
+ metro:"Metropolises",metroNote:"+2 VP each, on a city",walls:"City walls",hand:v=>`hand ${v.n}`,knights:"Knights",knightsNote:"total · active",basic:"Basic",strong:"Strong",mighty:"Mighty",act:"act.",
+ kAdd:v=>`Add ${v.l} knight`,kRem:v=>`Remove ${v.l} knight`,kOn:v=>`Activate ${v.l}`,kOff:v=>`Deactivate ${v.l}`,
+ barb:v=>`Barbarians: ${v.r} of ${v.m}`,barbS:"Barbarians",barbCities:"cities",defense:"Defence",swords:"active strength",adv:"Advance (black ship)",back:"Back one",resolve:"Resolve attack",
+ arrive:"The barbarians reach Catan! Resolve the attack.",defWin:v=>`The defenders win (${v.d} to ${v.b}). Apply the Defender of Catan card.`,barWin:v=>`The barbarians win (${v.b} to ${v.d}). Lowest contribution: ${v.list}.`,
+ loses:v=>`${v.name} loses a city (it becomes a settlement)`,noCity:v=>`${v.name} has no city to lose`,
+ pv:"VP",wins:v=>`${v.name} wins!`,tie:v=>`Tie at ${v.n} VP!`,noGoal:"Nobody reached the target",saved:"Game saved to the archive",rematch:"Rematch",backGame:"Back to the counter",close:"Close",
+ archEmpty:"No saved games yet. Tap “End game” when you finish to save it here.",view:"View",hide:"Hide",del:"Delete",delSure:"Sure? Tap again",clearAll:"Clear archive"},
+fr:{splashWord:"COMPTEUR",theme:"Mode jour / nuit",rotT:"Tournez votre téléphone",rotS:"Le compteur s'utilise en mode portrait",tap:"Touchez pour commencer",licTitle:"Compteur de Catan",
+ licMsg:"Saisissez votre clé de licence pour débloquer le compteur. Si vous ne l'avez pas encore, vous pouvez l'essayer gratuitement pendant 3 parties.",
+ licEnded:"Vos 3 parties d'essai sont terminées. Obtenez votre clé pour continuer à utiliser le compteur sans limite.",
+ licPh:"VOTRE CLÉ",licAria:"Clé de licence",licGo:"Débloquer",licBuy:"Acheter une clé",licTry:"Essayer gratuitement",
+ licLeft:v=>`Parties d'essai restantes : ${v.n} sur ${v.m}`,licErr:"Clé incorrecte. Vérifiez-la et réessayez.",
+ title:"Compteur de Catan",sub:"Points de victoire",lang:"Langue",archive:"Archive des parties",
+ players:"Joueurs",scenario:"Scénario",target:"PV pour gagner",tgtDown:"Baisser l'objectif",tgtUp:"Augmenter l'objectif",
+ mods:"Extensions et variantes",active:v=>v.n===1?"(1 active)":`(${v.n} actives)`,
+ gExp:"Extensions combinables",ccNote:"13 PV sur la carte de base",seaNote:"(bateaux)",gPv:"Variantes qui changent les PV",portNote:"+1 PV · carte de 2 PV",caravNote:"se joue en 12 PV",gOther:"Autres variantes",twoNote:"2 joueurs",gWon:"Les Merveilles",won11Note:"(ou en achevant la merveille)",gCcv:"Variantes de Villes et Chevaliers",
+ x_cc:"Villes et Chevaliers",x_sea:"Marins",v_port:"Maître du port",v_wall:"Remparts",v_spec:"Spécialistes",v_carav:"Les Caravanes",v_jungle:"La Jungle",v_volc:"Volcans",v_events:"Cartes Événement",v_castles:"Châteaux",v_magic7:"Le 7 magique",v_friendly:"Voleur amical",v_fish:"Les Pêcheurs",v_two:"Catan à deux",v_won11:"Gagner avec 11 PV",v_ccmore:"Plus de 4 joueurs",v_ccatk:"Variante des attaques",v_ccerr:"Chevalier errant",v_cceasy:"Début facile",
+ c_won11:"Victoire à 11 PV",c_ccmore:"V&C : plus de 4",c_ccatk:"V&C : attaques",c_ccerr:"V&C : chevalier errant",c_cceasy:"V&C : début facile",
+ hint:"Gagne celui qui atteint l'objectif pendant son tour. Les cartes de 2 PV (Route la plus longue, Armée la plus puissante, Maître du port) n'appartiennent qu'à un joueur à la fois. « Extras » sert pour les PV spéciaux, métropoles, Défenseur de Catane, jetons de village et tout autre point de carte.",
+ swipe:"Faites glisser la fiche ou touchez un onglet pour changer de joueur",newGame:"Nouvelle partie",confirm:"Touchez encore pour confirmer",endGame:"Terminer la partie",
+ legal:"Compteur de points non officiel, créé de façon indépendante par PenTech.<br>Il n'est ni affilié, ni sponsorisé, ni approuvé par CATAN GmbH ou Devir.<br>CATAN est une marque déposée de CATAN GmbH. En Espagne, le jeu est édité par Devir.<br>Pour jouer, il vous faut un exemplaire du jeu. La clé de licence donne accès à cette app, pas au jeu.",
+ trial:v=>`Version d'essai : partie ${v.u} sur ${v.m}. `+(v.l>0?`Il en reste ${v.l}.`:"C'est la dernière."),
+ banner:v=>`${v.name} atteint ${v.pv} PV ! Si c'est son tour, la partie est gagnée.`,goal:v=>`Objectif ${v.t} PV`,nPl:v=>`${v.n} joueurs`,
+ wSea:"Villes et Chevaliers avec Marins : une seule attaque barbare pour toutes les îles, les règles des routes valent pour les bateaux, l'or ne donne pas de marchandises et les chevaliers peuvent voyager en bateau (ils sont toujours créés sur l'île principale). Les règles préviennent que les cartes avec des zones inexplorées ou beaucoup de petites îles ne conviennent pas.",
+ wRiv:v=>`Les Fleuves de Catane se joue en 12 PV avec ${v.x}.`,wRivBoth:"Marins et Villes et Chevaliers",wRivSea:"Marins (un bateau à l'embouchure d'un fleuve donne 1 PV tant qu'il y reste)",wRivCc:"Villes et Chevaliers (les chevaliers aux croisements de fleuve ne donnent pas de PV)",
+ wFish:"Les Pêcheurs : celui qui a la vieille botte a besoin d'1 PV de plus pour gagner. Le compteur ne l'ajoute pas : pensez-y à la table.",wTwo:"Catan à deux est prévu pour 2 vrais joueurs.",
+ settlements:"Colonies",cities:"Villes",vpCards:"Cartes PV",extras:"Extras",each:"1 PV chacun",road:"Route la plus longue",army:"Armée la plus puissante",
+ nameAria:v=>`Nom du joueur ${v.i}`,add:v=>`Ajouter : ${v.l}`,rem:v=>`Retirer : ${v.l}`,
+ metro:"Métropoles",metroNote:"+2 PV chacune, sur une ville",walls:"Remparts",hand:v=>`main ${v.n}`,knights:"Chevaliers",knightsNote:"total · actifs",basic:"Simples",strong:"Forts",mighty:"Puissants",act:"act.",
+ kAdd:v=>`Ajouter un chevalier : ${v.l}`,kRem:v=>`Retirer un chevalier : ${v.l}`,kOn:v=>`Activer : ${v.l}`,kOff:v=>`Désactiver : ${v.l}`,
+ barb:v=>`Barbares : ${v.r} sur ${v.m}`,barbS:"Barbares",barbCities:"villes",defense:"Défense",swords:"force active",adv:"Ils avancent (bateau noir)",back:"Reculer d'une case",resolve:"Résoudre l'attaque",
+ arrive:"Les barbares atteignent Catane ! Résolvez l'attaque.",defWin:v=>`Les défenseurs gagnent (${v.d} contre ${v.b}). Appliquez la carte « Défenseur de Catane ».`,barWin:v=>`Les barbares gagnent (${v.b} contre ${v.d}). Plus faible contribution : ${v.list}.`,
+ loses:v=>`${v.name} perd une ville (elle redevient colonie)`,noCity:v=>`${v.name} n'a aucune ville à perdre`,
+ pv:"PV",wins:v=>`${v.name} gagne !`,tie:v=>`Égalité à ${v.n} PV !`,noGoal:"Personne n'a atteint l'objectif",saved:"Partie enregistrée dans l'archive",rematch:"Revanche",backGame:"Retour au compteur",close:"Fermer",
+ archEmpty:"Aucune partie enregistrée. Touchez « Terminer la partie » à la fin pour l'enregistrer ici.",view:"Voir",hide:"Masquer",del:"Supprimer",delSure:"Sûr ? Touchez encore",clearAll:"Vider l'archive"},
+de:{splashWord:"ZÄHLER",theme:"Tag-/Nachtmodus",rotT:"Dreh dein Handy",rotS:"Der Zähler funktioniert im Hochformat",tap:"Zum Starten tippen",licTitle:"Catan-Zähler",
+ licMsg:"Gib deinen Lizenzschlüssel ein, um den Zähler freizuschalten. Wenn du noch keinen hast, kannst du ihn 3 Partien lang kostenlos testen.",
+ licEnded:"Deine 3 Testpartien sind vorbei. Hol dir deinen Schlüssel, um den Zähler ohne Einschränkungen weiter zu nutzen.",
+ licPh:"DEIN SCHLÜSSEL",licAria:"Lizenzschlüssel",licGo:"Freischalten",licBuy:"Schlüssel kaufen",licTry:"Kostenlos testen",
+ licLeft:v=>`Verbleibende Testpartien: ${v.n} von ${v.m}`,licErr:"Falscher Schlüssel. Prüf ihn und versuch es noch einmal.",
+ title:"Catan-Zähler",sub:"Siegpunkte",lang:"Sprache",archive:"Partiearchiv",
+ players:"Spieler",scenario:"Szenario",target:"SP zum Sieg",tgtDown:"Ziel senken",tgtUp:"Ziel erhöhen",
+ mods:"Erweiterungen und Varianten",active:v=>`(${v.n} aktiv)`,
+ gExp:"Kombinierbare Erweiterungen",ccNote:"13 SP auf der Grundkarte",seaNote:"(Schiffe)",gPv:"Varianten, die die SP ändern",portNote:"+1 SP · 2-SP-Karte",caravNote:"wird bis 12 SP gespielt",gOther:"Weitere Varianten",twoNote:"2 Spieler",gWon:"Die Weltwunder",won11Note:"(oder durch Fertigstellen des Weltwunders)",gCcv:"Varianten von Städte & Ritter",
+ x_cc:"Städte & Ritter",x_sea:"Seefahrer",v_port:"Hafenmeister",v_wall:"Stadtmauern",v_spec:"Spezialisten",v_carav:"Die Karawanen",v_jungle:"Der Dschungel",v_volc:"Vulkane",v_events:"Ereigniskarten",v_castles:"Burgen",v_magic7:"Die magische 7",v_friendly:"Freundlicher Räuber",v_fish:"Die Fischer",v_two:"Catan zu zweit",v_won11:"Sieg mit 11 SP",v_ccmore:"Mehr als 4 Spieler",v_ccatk:"Angriffsvariante",v_ccerr:"Fahrender Ritter",v_cceasy:"Leichter Einstieg",
+ c_won11:"Sieg mit 11 SP",c_ccmore:"S&R: mehr als 4",c_ccatk:"S&R: Angriffe",c_ccerr:"S&R: fahrender Ritter",c_cceasy:"S&R: leichter Einstieg",
+ hint:"Wer in seinem Zug das Ziel erreicht, gewinnt. Die 2-SP-Karten (Längste Handelsstraße, Größte Rittermacht, Hafenmeister) hat immer nur ein Spieler. „Extras“ ist für Sondersiegpunkte, Metropolen, Verteidiger von Catan, Dorfplättchen und alle anderen Kartenpunkte.",
+ swipe:"Wisch über die Karte oder tipp auf einen Reiter, um den Spieler zu wechseln",newGame:"Neue Partie",confirm:"Zum Bestätigen noch einmal tippen",endGame:"Partie beenden",
+ legal:"Inoffizieller Punktezähler, unabhängig entwickelt von PenTech.<br>Nicht verbunden mit, gesponsert oder genehmigt von CATAN GmbH oder Devir.<br>CATAN ist eine eingetragene Marke der CATAN GmbH. In Spanien wird das Spiel von Devir herausgegeben.<br>Zum Spielen brauchst du ein Exemplar des Spiels. Der Lizenzschlüssel gibt Zugang zu dieser App, nicht zum Spiel.",
+ trial:v=>`Testversion: Partie ${v.u} von ${v.m}. `+(v.l>0?`Noch ${v.l} übrig.`:"Das ist die letzte."),
+ banner:v=>`${v.name} erreicht ${v.pv} SP! Wenn ${v.name} am Zug ist, ist die Partie gewonnen.`,goal:v=>`Ziel ${v.t} SP`,nPl:v=>`${v.n} Spieler`,
+ wSea:"Städte & Ritter mit Seefahrer: ein einziger Barbarenangriff für alle Inseln, die Straßenregeln gelten auch für Schiffe, Gold bringt keine Handelswaren und Ritter können per Schiff reisen (sie werden immer auf der Hauptinsel gebaut). Die Regeln warnen, dass Karten mit unerforschten Gebieten oder vielen kleinen Inseln nicht gut funktionieren.",
+ wRiv:v=>`Die Flüsse von Catan wird mit ${v.x} bis 12 SP gespielt.`,wRivBoth:"Seefahrer und Städte & Ritter",wRivSea:"Seefahrer (ein Schiff an einer Flussmündung bringt 1 SP, solange es dort bleibt)",wRivCc:"Städte & Ritter (Ritter an Flusskreuzungen bringen keine SP)",
+ wFish:"Die Fischer: Wer den alten Stiefel hat, braucht 1 SP mehr zum Sieg. Der Zähler rechnet das nicht ein: denkt am Tisch daran.",wTwo:"Catan zu zweit ist für 2 echte Spieler gedacht.",
+ settlements:"Siedlungen",cities:"Städte",vpCards:"Siegpunktkarten",extras:"Extras",each:"je 1 SP",road:"Längste Handelsstraße",army:"Größte Rittermacht",
+ nameAria:v=>`Name von Spieler ${v.i}`,add:v=>`${v.l} hinzufügen`,rem:v=>`${v.l} entfernen`,
+ metro:"Metropolen",metroNote:"je +2 SP, auf einer Stadt",walls:"Stadtmauern",hand:v=>`Hand ${v.n}`,knights:"Ritter",knightsNote:"gesamt · aktiv",basic:"Einfache",strong:"Starke",mighty:"Mächtige",act:"akt.",
+ kAdd:v=>`Ritter hinzufügen: ${v.l}`,kRem:v=>`Ritter entfernen: ${v.l}`,kOn:v=>`Aktivieren: ${v.l}`,kOff:v=>`Deaktivieren: ${v.l}`,
+ barb:v=>`Barbaren: ${v.r} von ${v.m}`,barbS:"Barbaren",barbCities:"Städte",defense:"Verteidigung",swords:"aktive Stärke",adv:"Sie rücken vor (schwarzes Schiff)",back:"Eins zurück",resolve:"Angriff auswerten",
+ arrive:"Die Barbaren erreichen Catan! Werte den Angriff aus.",defWin:v=>`Die Verteidiger gewinnen (${v.d} gegen ${v.b}). Wende die Karte „Verteidiger von Catan“ an.`,barWin:v=>`Die Barbaren gewinnen (${v.b} gegen ${v.d}). Geringster Beitrag: ${v.list}.`,
+ loses:v=>`${v.name} verliert eine Stadt (sie wird zur Siedlung)`,noCity:v=>`${v.name} hat keine Stadt zu verlieren`,
+ pv:"SP",wins:v=>`${v.name} gewinnt!`,tie:v=>`Gleichstand bei ${v.n} SP!`,noGoal:"Niemand hat das Ziel erreicht",saved:"Partie im Archiv gespeichert",rematch:"Revanche",backGame:"Zurück zum Zähler",close:"Schließen",
+ archEmpty:"Noch keine gespeicherten Partien. Tippe am Ende auf „Partie beenden“, um sie hier zu speichern.",view:"Ansehen",hide:"Ausblenden",del:"Löschen",delSure:"Sicher? Noch einmal tippen",clearAll:"Archiv leeren"},
+it:{splashWord:"CONTATORE",theme:"Modalità giorno / notte",rotT:"Gira il telefono",rotS:"Il contatore si usa in verticale",tap:"Tocca per iniziare",licTitle:"Contatore di Catan",
+ licMsg:"Inserisci la tua chiave di licenza per sbloccare il contatore. Se non ce l'hai ancora, puoi provarlo gratis per 3 partite.",
+ licEnded:"Le 3 partite di prova sono finite. Ottieni la tua chiave per continuare a usare il contatore senza limiti.",
+ licPh:"LA TUA CHIAVE",licAria:"Chiave di licenza",licGo:"Sblocca",licBuy:"Compra la chiave",licTry:"Prova gratis",
+ licLeft:v=>`Partite di prova disponibili: ${v.n} su ${v.m}`,licErr:"Chiave errata. Controllala e riprova.",
+ title:"Contatore di Catan",sub:"Punti vittoria",lang:"Lingua",archive:"Archivio partite",
+ players:"Giocatori",scenario:"Scenario",target:"PV per vincere",tgtDown:"Abbassa obiettivo",tgtUp:"Alza obiettivo",
+ mods:"Espansioni e varianti",active:v=>v.n===1?"(1 attiva)":`(${v.n} attive)`,
+ gExp:"Espansioni combinabili",ccNote:"13 PV sulla mappa base",seaNote:"(navi)",gPv:"Varianti che cambiano i PV",portNote:"+1 PV · carta da 2 PV",caravNote:"si gioca a 12 PV",gOther:"Altre varianti",twoNote:"2 giocatori",gWon:"Le Meraviglie",won11Note:"(o completando la meraviglia)",gCcv:"Varianti di Città e Cavalieri",
+ x_cc:"Città e Cavalieri",x_sea:"Marinai",v_port:"Capitano del porto",v_wall:"Mura cittadine",v_spec:"Specialisti",v_carav:"Le carovane",v_jungle:"La giungla",v_volc:"Vulcani",v_events:"Carte evento",v_castles:"Castelli",v_magic7:"Il 7 magico",v_friendly:"Brigante amichevole",v_fish:"I pescatori",v_two:"Catan per due",v_won11:"Vincere con 11 PV",v_ccmore:"Più di 4 giocatori",v_ccatk:"Variante degli attacchi",v_ccerr:"Cavaliere errante",v_cceasy:"Inizio facile",
+ c_won11:"Vittoria a 11 PV",c_ccmore:"C&C: più di 4",c_ccatk:"C&C: attacchi",c_ccerr:"C&C: cavaliere errante",c_cceasy:"C&C: inizio facile",
+ hint:"Vince chi raggiunge l'obiettivo durante il proprio turno. Le carte da 2 PV (Strada più lunga, Esercito più grande, Capitano del porto) le ha un solo giocatore alla volta. «Extra» serve per PV speciali, metropoli, Difensore di Catan, segnalini villaggio e qualsiasi altro punto della mappa.",
+ swipe:"Scorri la scheda o tocca una linguetta per cambiare giocatore",newGame:"Nuova partita",confirm:"Tocca di nuovo per confermare",endGame:"Termina partita",
+ legal:"Contatore di punti non ufficiale, creato in modo indipendente da PenTech.<br>Non è affiliato, sponsorizzato né approvato da CATAN GmbH o da Devir.<br>CATAN è un marchio registrato di CATAN GmbH. In Spagna il gioco è pubblicato da Devir.<br>Per giocare ti serve una copia del gioco. La chiave di licenza dà accesso a questa app, non al gioco.",
+ trial:v=>`Versione di prova: partita ${v.u} su ${v.m}. `+(v.l>1?`Te ne restano ${v.l}.`:v.l===1?"Te ne resta 1.":"È l'ultima."),
+ banner:v=>`${v.name} arriva a ${v.pv} PV! Se è il suo turno, ha vinto.`,goal:v=>`Obiettivo ${v.t} PV`,nPl:v=>`${v.n} giocatori`,
+ wSea:"Città e Cavalieri con Marinai: un solo attacco barbaro per tutte le isole, le regole delle strade valgono per le navi, l'oro non dà merci e i cavalieri possono viaggiare in nave (si creano sempre sull'isola principale). Le regole avvertono che le mappe con zone inesplorate o molte isole piccole non funzionano bene.",
+ wRiv:v=>`I Fiumi di Catan si gioca a 12 PV con ${v.x}.`,wRivBoth:"Marinai e Città e Cavalieri",wRivSea:"Marinai (una nave alla foce di un fiume dà 1 PV finché resta lì)",wRivCc:"Città e Cavalieri (i cavalieri sugli incroci di fiume non danno PV)",
+ wFish:"I pescatori: chi ha il vecchio stivale ha bisogno di 1 PV in più per vincere. Il contatore non lo somma: tenetelo presente al tavolo.",wTwo:"Catan per due è pensato per 2 giocatori reali.",
+ settlements:"Colonie",cities:"Città",vpCards:"Carte PV",extras:"Extra",each:"1 PV l'uno",road:"Strada più lunga",army:"Esercito più grande",
+ nameAria:v=>`Nome del giocatore ${v.i}`,add:v=>`Aggiungi ${v.l}`,rem:v=>`Togli ${v.l}`,
+ metro:"Metropoli",metroNote:"+2 PV l'una, su una città",walls:"Mura",hand:v=>`mano ${v.n}`,knights:"Cavalieri",knightsNote:"totale · attivi",basic:"Base",strong:"Forti",mighty:"Potenti",act:"att.",
+ kAdd:v=>`Aggiungi cavaliere ${v.l}`,kRem:v=>`Togli cavaliere ${v.l}`,kOn:v=>`Attiva ${v.l}`,kOff:v=>`Disattiva ${v.l}`,
+ barb:v=>`Barbari: ${v.r} su ${v.m}`,barbS:"Barbari",barbCities:"città",defense:"Difesa",swords:"forza attiva",adv:"Avanzano (nave nera)",back:"Indietro di uno",resolve:"Risolvi l'attacco",
+ arrive:"I barbari arrivano a Catan! Risolvi l'attacco.",defWin:v=>`Vincono i difensori (${v.d} contro ${v.b}). Applica la carta «Difensore di Catan».`,barWin:v=>`Vincono i barbari (${v.b} contro ${v.d}). Contributo minore: ${v.list}.`,
+ loses:v=>`${v.name} perde una città (torna colonia)`,noCity:v=>`${v.name} non ha città da perdere`,
+ pv:"PV",wins:v=>`${v.name} vince!`,tie:v=>`Pareggio a ${v.n} PV!`,noGoal:"Nessuno ha raggiunto l'obiettivo",saved:"Partita salvata nell'archivio",rematch:"Rivincita",backGame:"Torna al contatore",close:"Chiudi",
+ archEmpty:"Ancora nessuna partita salvata. Tocca «Termina partita» alla fine per salvarla qui.",view:"Vedi",hide:"Nascondi",del:"Elimina",delSure:"Sicuro? Tocca di nuovo",clearAll:"Svuota archivio"}};
+const LGK="catan-idioma";
+let L=(()=>{try{const s=localStorage.getItem(LGK);if(LANGS.includes(s))return s}catch(e){}
+  const n=(navigator.languages||[navigator.language||"en"]).map(x=>String(x).slice(0,2).toLowerCase()).find(x=>LANGS.includes(x));return n||"en"})();
+const t=(k,v)=>{const s=(T[L]&&T[L][k]!==undefined)?T[L][k]:T.es[k];return typeof s==="function"?s(v||{}):(s===undefined?k:s)};
+const scName=k=>(SCN[L]&&SCN[L][k])||k;
+const grName=k=>(GRN[L]&&GRN[L][k])||k;
+const colName=i=>COLN[L][i];
+const ord=n=>ORD[L](n);
+
+const VERSION="1.0";
+const BASE="Catan normal (3-6 jug.)";
+const G=[["Base",[[BASE,10]]],
 ["Navegantes",[["Hacia las nuevas costas",13],["Las islas",12],["Océanos",12],["El nuevo mundo",12],["La gran travesía",12],["Gran Catan",18],["A través del desierto",12]]],
-["Ciudades y Caballeros",[["Ciudades y Caballeros",13]]],
-["Variantes",[["La Caravana",12],["Los pescadores",10],["Catan para 2",10]]],
 ["Mapas",[["Las Maravillas de Catan",10],["Jinetes del Desierto",13],["Atlantis",10],["Los especialistas",16],["El Gran Canal",16],["El atolón",12],["Triángulo de las Bermudas",12],["La Invasión Bárbara",12],["Mercaderes y Bárbaros",13],["Los Ríos de Catan",10],["Las Colonias",13],["Los Gremios",10]]],
 ["Tableros propios",[["Alejandro el Grande",14],["Keops",12],["La Gran Muralla",10],["Troya",15],["Nuremberg",13],["La conquista del mundo",10],["Los pueblos marineros",15],["El saqueo de Roma",10]]]];
 const PV={},GR={};G.forEach(g=>g[1].forEach(x=>{PV[x[0]]=x[1];GR[x[0]]=g[0]}));
-const COL=[["Rojo","#d1382c"],["Azul","#2a6fc9"],["Naranja","#e08a1e"],["Blanco","#bdb197"],["Verde","#3f9b52"],["Marrón","#8a5a36"]];
-const K="catan-contador-v1";
-const blank=i=>({name:COL[i][0],s:2,c:0,v:0,e:0});
-let S={n:4,sc:"Catan normal (3-6 jug.)",adj:0,m:{},hold:{road:-1,army:-1,port:-1},p:[0,1,2,3,4,5].map(blank)};
+const COL=["#d1382c","#2a6fc9","#e08a1e","#bdb197","#3f9b52","#8a5a36"];
+const K="catan-contador-v1",HK="catan-historial-v1";
+const blank=i=>({name:colName(i),s:2,c:0,v:0,e:0});
+let S={n:4,sc:BASE,adj:0,m:{},hold:{road:-1,army:-1,port:-1},p:[0,1,2,3,4,5].map(blank)};
 try{const r=JSON.parse(localStorage.getItem(K));if(r&&r.p)S=r}catch(e){}
-if(S.sc)S.sc=S.sc.replace("Catán","Catan");S.m=S.m||{};if(S.adj===undefined){S.adj=(S.base!==undefined&&PV[S.sc]!==undefined)?S.base-PV[S.sc]:0;delete S.base}if(S.msg)S.msg=S.msg.replace(/Catán/g,"Catan");
+if(S.sc)S.sc=S.sc.replace("Catán","Catan");S.m=S.m||{};if(S.adj===undefined){S.adj=(S.base!==undefined&&PV[S.sc]!==undefined)?S.base-PV[S.sc]:0;delete S.base}
+if(typeof S.msg==="string")S.msg=null;
+{const OLD={"Ciudades y Caballeros":()=>{S.cc=1},"La Caravana":()=>{S.m.carav=1},"Los pescadores":()=>{S.m.fish=1},"Catan para 2":()=>{S.m.two=1;S.n=2}};if(OLD[S.sc]){OLD[S.sc]();S.sc=BASE}}
+if(PV[S.sc]===undefined)S.sc=BASE;
 const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
 const $=id=>document.getElementById(id);
-const MN={jungle:"Jungla",volc:"Volcanes",events:"Eventos",castles:"Castillos",magic7:"7 Mágico",friendly:"Ladrón Amistoso",two:"Catan para 2",port:"Maestro portuario",wall:"Murallas",spec:"Especialistas",won11:"Victoria a 11 PV",ccmore:"C&C: más de 4",ccatk:"C&C: ataques",ccerr:"C&C: caballero errante",cceasy:"C&C: comienzo fácil"};
+const MK=["port","wall","spec","carav","jungle","volc","events","castles","magic7","friendly","fish","two","won11","ccmore","ccatk","ccerr","cceasy"];
+const chipName=k=>["won11","ccmore","ccatk","ccerr","cceasy"].includes(k)?t("c_"+k):t("v_"+k);
 const isSea=()=>GR[S.sc]==="Navegantes";
 const seaOn=()=>isSea()||!!S.sea;
 function baseFor(){let b=PV[S.sc]||10;
-  if(S.sc==="Los Ríos de Catan"&&(S.sea||S.cc))b=12;            // PDF: con Navegantes o C&C, 12 PV
-  if(S.sc==="Las Maravillas de Catan"&&S.m.won11)b=11;            // PDF: variante a 11 PV
+  if(S.sc==="Los Ríos de Catan"&&(S.sea||S.cc))b=12;            // reglas: con Navegantes o C&C, 12 PV
+  if(S.sc==="Las Maravillas de Catan"&&S.m.won11)b=11;            // reglas: variante a 11 PV
+  if(S.cc&&S.sc===BASE)b=13;                                      // reglas: C&C, 13 PV
+  if(S.m.carav&&b<12)b=12;                                        // reglas: La Caravana se juega a 12 PV
   return b}
-const target=()=>Math.max(3,baseFor()+(S.adj||0)+(S.m.port?1:0)+(S.m.wall?1:0)+(S.m.spec?2:0));
+const target=()=>Math.max(3,baseFor()+(S.adj||0)+(S.m.port?1:0)+(S.m.wall&&!S.cc?1:0)+(S.m.spec&&S.sc!=="Los especialistas"?2:0));
 const total=(p,i)=>p.s+2*p.c+p.v+p.e+(S.cc?2*(p.m||0):0)+(S.hold.road===i?2:0)+(S.hold.army===i?2:0)+(S.m.port&&S.hold.port===i?2:0);
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 $("n").innerHTML=[2,3,4,5,6].map(k=>`<option value="${k}">${k}</option>`).join("");
-$("scl").innerHTML=G.map(g=>`<div class="gt" role="presentation">${g[0]}</div>`+g[1].map(x=>`<button class="op" role="option" data-v="${x[0]}"><span>${x[0]}</span><span>${x[1]} PV</span></button>`).join("")).join("");
+function buildList(){$("scl").innerHTML=G.map(g=>`<div class="gt" role="presentation">${esc(grName(g[0]))}</div>`+g[1].map(x=>`<button class="op" role="option" data-v="${esc(x[0])}"><span>${esc(scName(x[0]))}</span><span>${x[1]} ${t("pv")}</span></button>`).join("")).join("")}
 const openDD=o=>{$("scl").hidden=!o;$("sc").setAttribute("aria-expanded",o)};
 $("sc").onclick=()=>openDD($("scl").hidden);
-$("scl").onclick=e=>{const b=e.target.closest(".op");if(!b)return;S.sc=b.dataset.v;S.adj=0;if(S.sc==="Ciudades y Caballeros")S.cc=1;if(S.sc!=="Las Maravillas de Catan")S.m.won11=0;if(isSea())S.sea=0;if(S.sc==="Catan para 2")S.n=2;openDD(false);$("sc").focus();draw()};
+$("scl").onclick=e=>{const b=e.target.closest(".op");if(!b)return;S.sc=b.dataset.v;S.adj=0;if(S.sc!=="Las Maravillas de Catan")S.m.won11=0;if(isSea())S.sea=0;openDD(false);$("sc").focus();draw()};
 document.addEventListener("click",e=>{if(!e.target.closest(".dd"))openDD(false)});
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("scl").hidden){openDD(false);$("sc").focus()}});
-const stepper=(i,k,label,note,min)=>`<div class="row"><span>${label}<em>${note}</em></span><div class="step"><button class="sq" data-i="${i}" data-k="${k}" data-d="-1" aria-label="Quitar ${label}">−</button><b>${S.p[i][k]||0}</b><button class="sq" data-i="${i}" data-k="${k}" data-d="1" aria-label="Añadir ${label}">+</button></div></div>`;
+const stepper=(i,k,label,note)=>`<div class="row"><span>${label}<em>${note}</em></span><div class="step"><button class="sq" data-i="${i}" data-k="${k}" data-d="-1" aria-label="${esc(t("rem",{l:label}))}">−</button><b>${S.p[i][k]||0}</b><button class="sq" data-i="${i}" data-k="${k}" data-d="1" aria-label="${esc(t("add",{l:label}))}">+</button></div></div>`;
+function leader(){const tg=target();let best=-1,bi=-1;S.p.slice(0,S.n).forEach((p,i)=>{const v=total(p,i);if(v>=tg&&v>best){best=v;bi=i}});return[bi,best]}
 function draw(){
-  {const no2=S.sc==="Catan normal (3-6 jug.)"&&!S.m.two;const o2=$("n").querySelector('option[value="2"]');o2.disabled=no2;if(no2&&S.n<3)S.n=3}
-  $("n").value=S.n;$("sc").innerHTML=`<span>${esc(S.sc)}</span><span>▾</span>`;document.querySelectorAll(".op").forEach(o=>o.setAttribute("aria-selected",o.dataset.v===S.sc));$("tv").textContent=target();
-  $("m_cc").checked=!!S.cc;$("m_sea").checked=!!S.sea;$("l_sea").hidden=isSea();
+  if(S.sc!==BASE){S.m.carav=0;S.m.fish=0}if(S.cc)S.m.wall=0;if(S.sc==="Los especialistas")S.m.spec=0;
+  {const no2=S.sc===BASE&&!S.m.two;const o2=$("n").querySelector('option[value="2"]');o2.disabled=no2;if(no2&&S.n<3)S.n=3}
+  const pv=t("pv");
+  $("n").value=S.n;$("sc").innerHTML=`<span>${esc(scName(S.sc))}</span><span>▾</span>`;document.querySelectorAll(".op").forEach(o=>o.setAttribute("aria-selected",o.dataset.v===S.sc));$("tv").textContent=target();
+  $("m_cc").checked=!!S.cc;$("m_sea").checked=!!S.sea;$("l_sea").hidden=isSea();$("l_wall").hidden=!!S.cc;$("l_spec").hidden=S.sc==="Los especialistas";$("l_carav").hidden=S.sc!==BASE;$("l_fish").hidden=S.sc!==BASE;
   document.querySelectorAll("[data-m]").forEach(c=>c.checked=!!S.m[c.dataset.m]);
   $("g_wonders").hidden=S.sc!=="Las Maravillas de Catan";$("g_ccv").hidden=!S.cc;
-  const act=(S.cc&&S.sc!=="Ciudades y Caballeros"?1:0)+(S.sea?1:0)+Object.keys(S.m).filter(k=>S.m[k]&&MN[k]&&!(k.startsWith("cc")&&!S.cc)).length;
-  $("mcnt").textContent=act?`(${act} activa${act>1?"s":""})`:"";
+  const act=(S.cc?1:0)+(S.sea?1:0)+MK.filter(k=>S.m[k]&&!(k.startsWith("cc")&&!S.cc)).length;
+  $("mcnt").textContent=act?t("active",{n:act}):"";
   const w=[];
-  if(S.cc&&seaOn())w.push("Ciudades y Caballeros con Navegantes: un solo ataque bárbaro para todas las islas, las reglas de calles valen para los barcos, el oro no da mercancías y los caballeros pueden viajar en barco (se crean siempre en la isla principal). El PDF avisa de que los mapas con zonas inexploradas o muchas islas pequeñas no van bien.");
-  if(S.sc==="Los Ríos de Catan"&&(S.sea||S.cc))w.push("Los Ríos de Catan se juega a 12 PV con "+(S.sea&&S.cc?"Navegantes y Ciudades y Caballeros":S.sea?"Navegantes (un barco en una desembocadura da 1 PV mientras siga allí)":"Ciudades y Caballeros (los caballeros en cruces de río no dan PV)")+".");
-  if(S.m.wall&&S.cc)w.push("Murallas de la ciudad ya forma parte de Ciudades y Caballeros: no hace falta activarla aparte.");
-  if(S.m.two&&S.n!==2)w.push("Catan para 2 está pensado para 2 jugadores reales.");
+  if(S.cc&&seaOn())w.push(t("wSea"));
+  if(S.sc==="Los Ríos de Catan"&&(S.sea||S.cc))w.push(t("wRiv",{x:t(S.sea&&S.cc?"wRivBoth":S.sea?"wRivSea":"wRivCc")}));
+  if(S.m.fish)w.push(t("wFish"));
+  if(S.m.two&&S.n!==2)w.push(t("wTwo"));
   $("mwarn").innerHTML=w.map(x=>"• "+esc(x)).join("<br>");
-  const t=target();let best=-1,bi=-1;
-  const ps=S.p.slice(0,S.n);
-  ps.forEach((p,i)=>{const v=total(p,i);if(v>=t&&v>best){best=v;bi=i}});
-  $("ban").innerHTML=bi>=0?`<div class="banner" role="status">¡${esc(ps[bi].name)} llega a ${best} PV! Si es su turno, ha ganado.</div>`:"";
-  const chips=[`<span class="chip pv">Objetivo ${t} PV</span>`,`<span class="chip">${S.n} jugadores</span>`];
-  if(S.cc&&S.sc!=="Ciudades y Caballeros")chips.push('<span class="chip">+ Ciudades y Caballeros</span>');
-  if(S.sea)chips.push('<span class="chip">+ Navegantes</span>');
-  Object.keys(MN).forEach(k=>{if(S.m[k]&&!(k.startsWith("cc")&&!S.cc))chips.push(`<span class="chip">+ ${MN[k]}</span>`)});
-  $("scen").innerHTML=`<span class="sg">${esc(GR[S.sc]||"Escenario")}</span><span class="sn">${esc(S.sc)}</span><span class="chips">${chips.join("")}</span>`;
+  const tg=target(),[bi,best]=leader(),ps=S.p.slice(0,S.n);
+  $("ban").innerHTML=bi>=0?`<div class="banner" role="status">${esc(t("banner",{name:ps[bi].name,pv:best}))}<button type="button" id="banEnd">${esc(t("endGame"))}</button></div>`:"";
+  if(bi>=0)$("banEnd").onclick=endGame;
+  const chips=[`<span class="chip pv">${esc(t("goal",{t:tg}))}</span>`,`<span class="chip">${esc(t("nPl",{n:S.n}))}</span>`];
+  if(S.cc)chips.push(`<span class="chip">+ ${esc(t("x_cc"))}</span>`);
+  if(S.sea)chips.push(`<span class="chip">+ ${esc(t("x_sea"))}</span>`);
+  MK.forEach(k=>{if(S.m[k]&&!(k.startsWith("cc")&&!S.cc))chips.push(`<span class="chip">+ ${esc(chipName(k))}</span>`)});
+  $("scen").innerHTML=`<span class="sg">${esc(grName(GR[S.sc]))}</span><span class="sn">${esc(scName(S.sc))}</span><span class="chips">${chips.join("")}</span>`;
   S.tab=Math.min(Math.max(0,S.tab||0),S.n-1);
   const tabs=$("tabs");tabs.style.setProperty("--n",S.n);
-  tabs.innerHTML=ps.map((p,i)=>`<button class="tab${bi===i?" win":""}" role="tab" id="tab${i}" aria-controls="g" aria-selected="${i===S.tab}" tabindex="${i===S.tab?0:-1}" data-t="${i}" style="--c:${COL[i][1]}"><span class="tn">${esc(p.name)}</span><span class="ts">${total(p,i)}</span></button>`).join("");
+  tabs.innerHTML=ps.map((p,i)=>`<button class="tab${bi===i?" win":""}" role="tab" id="tab${i}" aria-controls="g" aria-selected="${i===S.tab}" tabindex="${i===S.tab?0:-1}" data-t="${i}" style="--c:${COL[i]}"><span class="tn">${esc(p.name)}</span><span class="ts">${total(p,i)}</span></button>`).join("");
   $("g").setAttribute("role","tabpanel");$("g").setAttribute("aria-labelledby","tab"+S.tab);
   $("g").innerHTML=ps.map((p,i)=>{if(i!==S.tab)return "";const v=total(p,i);
-    const tg=(k,l)=>`<button data-h="${k}" data-i="${i}" aria-pressed="${S.hold[k]===i}">${l} (2)</button>`;
-    return `<article class="p${bi===i?" win":""}" style="--c:${COL[i][1]}">
-    <div class="top"><input type="text" value="${esc(p.name)}" data-name="${i}" aria-label="Nombre del jugador ${i+1}"><div class="score">${v}<small> / ${t}</small></div></div>
-    <div class="prog"><i style="width:${Math.min(100,v/t*100)}%"></i></div>
-    ${stepper(i,"s","Poblados","1 PV")}${stepper(i,"c","Ciudades","2 PV")}${stepper(i,"v","Cartas de PV","1 PV")}${stepper(i,"e","Extras","1 PV c/u")}${S.cc?ccRows(i):""}
-    <div class="tg">${tg("road","Ruta Comercial")}${tg("army","Gran Ejército")}${S.m.port?tg("port","Maestro portuario"):""}</div></article>`}).join("");
+    const tgb=(k,l)=>`<button data-h="${k}" data-i="${i}" aria-pressed="${S.hold[k]===i}">${esc(l)} (2)</button>`;
+    return `<article class="p${bi===i?" win":""}" style="--c:${COL[i]}">
+    <div class="top"><input type="text" value="${esc(p.name)}" data-name="${i}" aria-label="${esc(t("nameAria",{i:i+1}))}"><div class="score">${v}<small> / ${tg}</small></div></div>
+    <div class="prog"><i style="width:${Math.min(100,v/tg*100)}%"></i></div>
+    ${stepper(i,"s",t("settlements"),"1 "+pv)}${stepper(i,"c",t("cities"),"2 "+pv)}${stepper(i,"v",t("vpCards"),"1 "+pv)}${stepper(i,"e",t("extras"),t("each"))}${S.cc?ccRows(i):""}
+    <div class="tg">${tgb("road",t("road"))}${tgb("army",t("army"))}${S.m.port?tgb("port",t("v_port")):""}</div></article>`}).join("");
   drawCC();save();
 }
 const BAR=7;
 const gv=(p,k)=>p[k]||0;
-const ccRows=i=>{const p=S.p[i];const bt=(k,d,l,t)=>`<button class="sq" data-i="${i}" data-k="${k}" data-d="${d}" aria-label="${l}">${t}</button>`;const kr=(L,n)=>`<div class="kn"><span>${n}</span><span class="step">${bt("k"+L,-1,"Quitar caballero "+n,"−")}<b>${gv(p,"k"+L)}</b>${bt("k"+L,1,"Añadir caballero "+n,"+")}</span><span class="step">act. ${bt("a"+L,-1,"Desactivar "+n,"−")}<b>${gv(p,"a"+L)}</b>${bt("a"+L,1,"Activar "+n,"+")}</span></div>`;return stepper(i,"m","Metrópolis","+2 PV c/u, sobre una ciudad")+stepper(i,"w","Murallas","mano "+(7+2*gv(p,"w")))+`<div class="row"><span>Caballeros<em>total · activos</em></span></div>`+kr(1,"Básicos")+kr(2,"Fuertes")+kr(3,"Míticos")};
+const ccRows=i=>{const p=S.p[i];const bt=(k,d,l,x)=>`<button class="sq" data-i="${i}" data-k="${k}" data-d="${d}" aria-label="${esc(l)}">${x}</button>`;
+  const kr=(L2,n)=>`<div class="kn"><span>${n}</span><span class="step">${bt("k"+L2,-1,t("kRem",{l:n}),"−")}<b>${gv(p,"k"+L2)}</b>${bt("k"+L2,1,t("kAdd",{l:n}),"+")}</span><span class="step">${t("act")} ${bt("a"+L2,-1,t("kOff",{l:n}),"−")}<b>${gv(p,"a"+L2)}</b>${bt("a"+L2,1,t("kOn",{l:n}),"+")}</span></div>`;
+  return stepper(i,"m",t("metro"),t("metroNote"))+stepper(i,"w",t("walls"),t("hand",{n:7+2*gv(p,"w")}))+`<div class="row"><span>${t("knights")}<em>${t("knightsNote")}</em></span></div>`+kr(1,t("basic"))+kr(2,t("strong"))+kr(3,t("mighty"))};
 function force(){let b=0,d=0;S.p.slice(0,S.n).forEach(p=>{b+=p.c;d+=gv(p,"a1")+2*gv(p,"a2")+3*gv(p,"a3")});return[b,d]}
-function resolve(){const ps=S.p.slice(0,S.n),[b,d]=force();let m;
-  if(d>=b){m=`Ganan los defensores (${d} contra ${b}). Aplica la carta «Defensor de Catan».`}
+function msgText(m){if(!m)return "";if(m.k==="arrive")return t("arrive");if(m.k==="def")return t("defWin",m);
+  return t("barWin",{b:m.b,d:m.d,list:m.out.map(([n,l])=>t(l?"loses":"noCity",{name:n})).join("; ")})}
+function resolve(){const ps=S.p.slice(0,S.n),[b,d]=force();
+  if(d>=b)S.msg={k:"def",d,b};
   else{const f=ps.map(p=>gv(p,"a1")+2*gv(p,"a2")+3*gv(p,"a3"));const mn=Math.min(...f);const out=[];
-    ps.forEach((p,i)=>{if(f[i]!==mn)return;if(p.c-gv(p,"m")>0){p.c--;p.s++;p.w=Math.min(gv(p,"w"),p.c);out.push(`${p.name} pierde una ciudad (pasa a poblado)`)}else out.push(`${p.name} no tiene ciudad que perder`)});
-    m=`Ganan los bárbaros (${b} contra ${d}). Aportaron menos: ${out.join("; ")}.`}
-  ps.forEach(p=>{p.a1=p.a2=p.a3=0});S.bar=0;S.msg=m;draw()}
+    ps.forEach((p,i)=>{if(f[i]!==mn)return;if(p.c-gv(p,"m")>0){p.c--;p.s++;p.w=Math.min(gv(p,"w"),p.c);out.push([p.name,1])}else out.push([p.name,0])});
+    S.msg={k:"bar",b,d,out}}
+  ps.forEach(p=>{p.a1=p.a2=p.a3=0});S.bar=0;draw()}
 function drawCC(){const el=$("cc");if(!S.cc){el.innerHTML="";return}
   const [b,d]=force(),r=S.bar||0;
-  el.innerHTML=`<section class="cc"><b>Bárbaros: ${r} de ${BAR}</b><div class="pips" role="img" aria-label="Bárbaros ${r} de ${BAR}">${Array.from({length:BAR},(_,k)=>`<i class="${k<r?"on":""}"></i>`).join("")}</div><div class="vs"><span>Bárbaros ${b}<small> ciudades</small></span><span>Defensa ${d}<small> espadas activas</small></span></div><div class="foot"><button data-a="bp">Avanzan (barco negro)</button><button data-a="bm">Retroceder uno</button><button data-a="br" ${r<BAR?"disabled":""}>Resolver ataque</button></div>${S.msg?`<div class="res" role="status">${esc(S.msg)}</div>`:""}</section>`;
+  el.innerHTML=`<section class="cc"><b>${esc(t("barb",{r,m:BAR}))}</b><div class="pips" role="img" aria-label="${esc(t("barb",{r,m:BAR}))}">${Array.from({length:BAR},(_,k)=>`<i class="${k<r?"on":""}"></i>`).join("")}</div><div class="vs"><span>${esc(t("barbS"))} ${b}<small> ${esc(t("barbCities"))}</small></span><span>${esc(t("defense"))} ${d}<small> ${esc(t("swords"))}</small></span></div><div class="foot"><button data-a="bp">${esc(t("adv"))}</button><button data-a="bm">${esc(t("back"))}</button><button data-a="br" ${r<BAR?"disabled":""}>${esc(t("resolve"))}</button></div>${S.msg?`<div class="res" role="status">${esc(msgText(S.msg))}</div>`:""}</section>`;
   el.onclick=e=>{const a=e.target.closest("button");if(!a)return;const k=a.dataset.a;
-    if(k==="bp"){S.bar=Math.min(BAR,(S.bar||0)+1);S.msg=S.bar>=BAR?"¡Los bárbaros llegan a Catan! Resuelve el ataque.":""}
-    else if(k==="bm"){S.bar=Math.max(0,(S.bar||0)-1);S.msg=""}
+    if(k==="bp"){S.bar=Math.min(BAR,(S.bar||0)+1);S.msg=S.bar>=BAR?{k:"arrive"}:null}
+    else if(k==="bm"){S.bar=Math.max(0,(S.bar||0)-1);S.msg=null}
     else if(k==="br")return resolve();
     draw()}}
 $("m_cc").onchange=e=>{S.cc=e.target.checked?1:0;draw()};
-function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 $("n").onchange=e=>{S.n=+e.target.value;draw()};
 $("tm").onclick=()=>{if(target()>3)S.adj=(S.adj||0)-1;draw()};
 $("tp").onclick=()=>{S.adj=(S.adj||0)+1;draw()};
 $("m_sea").onchange=e=>{S.sea=e.target.checked?1:0;draw()};
-document.querySelectorAll("[data-m]").forEach(c=>c.onchange=e=>{const k=c.dataset.m;S.m[k]=c.checked?1:0;if(k==="port"&&!S.m.port)S.hold.port=-1;if(k==="two"&&c.checked)S.n=2;draw()});
+document.querySelectorAll("[data-m]").forEach(c=>c.onchange=()=>{const k=c.dataset.m;S.m[k]=c.checked?1:0;if(k==="port"&&!S.m.port)S.hold.port=-1;if(k==="two"&&c.checked)S.n=2;draw()});
 $("g").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
-  if(b.dataset.k){const p=S.p[+b.dataset.i],k=b.dataset.k;p[k]=Math.max(0,(p[k]||0)+ +b.dataset.d);for(const L of[1,2,3])p["a"+L]=Math.min(p["a"+L]||0,p["k"+L]||0);if(S.cc){p.m=Math.min(p.m||0,p.c);p.w=Math.min(p.w||0,p.c)}}
+  if(b.dataset.k){const p=S.p[+b.dataset.i],k=b.dataset.k;p[k]=Math.max(0,(p[k]||0)+ +b.dataset.d);for(const L2 of[1,2,3])p["a"+L2]=Math.min(p["a"+L2]||0,p["k"+L2]||0);if(S.cc){p.m=Math.min(p.m||0,p.c);p.w=Math.min(p.w||0,p.c)}}
   else if(b.dataset.h){const i=+b.dataset.i,h=b.dataset.h;S.hold[h]=S.hold[h]===i?-1:i}
   draw()});
-$("g").addEventListener("input",e=>{if(e.target.dataset.name!==undefined){const i=+e.target.dataset.name;S.p[i].name=e.target.value;const t=document.querySelector(`#tab${i} .tn`);if(t)t.textContent=e.target.value;save()}});
+$("g").addEventListener("input",e=>{if(e.target.dataset.name!==undefined){const i=+e.target.dataset.name;S.p[i].name=e.target.value;const x=document.querySelector(`#tab${i} .tn`);if(x)x.textContent=e.target.value;save()}});
 const goTab=(i,focus)=>{S.tab=(i+S.n)%S.n;draw();if(focus)$("tab"+S.tab).focus()};
 $("tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(b)goTab(+b.dataset.t)});
 $("tabs").addEventListener("keydown",e=>{const k={ArrowRight:1,ArrowLeft:-1}[e.key];if(k){e.preventDefault();goTab(S.tab+k,true)}else if(e.key==="Home"){e.preventDefault();goTab(0,true)}else if(e.key==="End"){e.preventDefault();goTab(S.n-1,true)}});
 let sx=null,sy=0;
 $("g").addEventListener("touchstart",e=>{if(e.target.closest("input"))return;sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
 $("g").addEventListener("touchend",e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)goTab(S.tab+(dx<0?1:-1))},{passive:true});
+
+/* ===== Partidas: nueva, revancha, terminar ===== */
+function resetScores(){S.p.forEach((p,i)=>{const nm=p.name;S.p[i]=blank(i);S.p[i].name=nm});S.hold={road:-1,army:-1,port:-1};S.bar=0;S.msg=null;S.gid=0;S.tab=0}
+function freshGame(){S.p=[0,1,2,3,4,5].map(blank);S.hold={road:-1,army:-1,port:-1};S.bar=0;S.msg=null;S.gid=0;S.sc=BASE;S.n=3;S.adj=0;S.cc=0;S.sea=0;S.m={};S.tab=0;$("mods").open=false;draw();scrollTo({top:0,behavior:"smooth"})}
+function rematch(){if(!newTrialGame())return;resetScores();closeModal();draw();scrollTo({top:0,behavior:"smooth"})}
 let armed=0;
-$("rs").onclick=e=>{if(!armed){armed=1;e.target.textContent="Toca otra vez para confirmar";setTimeout(()=>{armed=0;$("rs").textContent="Nueva partida"},3000);return}
-  armed=0;$("rs").textContent="Nueva partida";if(!newTrialGame())return;S.p=[0,1,2,3,4,5].map(blank);S.hold={road:-1,army:-1,port:-1};S.bar=0;S.msg="";S.sc="Catan normal (3-6 jug.)";S.n=3;S.adj=0;S.cc=0;S.sea=0;S.m={};S.tab=0;$("mods").open=false;draw();scrollTo({top:0,behavior:"smooth"})};
+$("rs").onclick=e=>{if(!armed){armed=1;e.target.textContent=t("confirm");setTimeout(()=>{armed=0;$("rs").textContent=t("newGame")},3000);return}
+  armed=0;$("rs").textContent=t("newGame");if(!newTrialGame())return;freshGame()};
+const hist=()=>{try{const h=JSON.parse(localStorage.getItem(HK));return Array.isArray(h)?h:[]}catch(e){return[]}};
+const setHist=h=>{try{localStorage.setItem(HK,JSON.stringify(h))}catch(e){}};
+const dispName=p=>LANGS.some(l=>COLN[l][p.col]===p.name)?COLN[L][p.col]:p.name;
+function ranked(ps){return ps.slice().sort((a,b)=>b.tot-a.tot).map(p=>({...p,name:dispName(p),pos:1+ps.filter(q=>q.tot>p.tot).length}))}
+function endGame(){
+  const ps=S.p.slice(0,S.n).map((p,i)=>({name:p.name||colName(i),col:i,tot:total(p,i),s:p.s,c:p.c,v:p.v,e:p.e,m:S.cc?gv(p,"m"):0,road:S.hold.road===i?1:0,army:S.hold.army===i?1:0,port:S.m.port&&S.hold.port===i?1:0}));
+  const rec={id:S.gid||Date.now(),d:Date.now(),sc:S.sc,cc:S.cc?1:0,sea:S.sea?1:0,m:{...S.m},tgt:target(),n:S.n,ps};
+  S.gid=rec.id;setHist([rec,...hist().filter(r=>r.id!==rec.id)].slice(0,200));save();showVictory(rec)}
+$("eg").onclick=endGame;
+
+/* ===== Ventanas ===== */
+function openModal(html){$("sheet").innerHTML=html;$("modal").hidden=false;const f=$("sheet").querySelector("button");if(f)f.focus()}
+function closeModal(){$("modal").hidden=true;$("sheet").innerHTML="";stopConfetti()}
+$("modal").addEventListener("click",e=>{if(e.target===$("modal"))closeModal()});
+document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;if(!$("modal").hidden)closeModal();else if(!$("scl").hidden){openDD(false);$("sc").focus()}});
+function recChips(r){const c=[t("goal",{t:r.tgt}),t("nPl",{n:r.n})];if(r.cc)c.push(t("x_cc"));if(r.sea)c.push(t("x_sea"));MK.forEach(k=>{if(r.m&&r.m[k]&&!(k.startsWith("cc")&&!r.cc))c.push(chipName(k))});return c}
+function rankList(r){return `<ol class="rank">${ranked(r.ps).map(p=>`<li class="${p.pos===1?"first":""}" style="--c:${COL[p.col]}"><span class="po">${ord(p.pos)}</span><span class="nm">${esc(p.name)}</span><span class="pt">${p.tot}</span></li>`).join("")}</ol>`}
+function showVictory(r){const R=ranked(r.ps),top=R[0].tot,first=R.filter(p=>p.pos===1);
+  const title=first.length>1?t("tie",{n:top}):t("wins",{name:first[0].name});
+  openModal(`<div class="vic"><h2>🏆 ${esc(title)}</h2><p class="sub">${esc(scName(r.sc))} · ${esc(t("goal",{t:r.tgt}))}${top<r.tgt?" · "+esc(t("noGoal")):""}</p>${rankList(r)}<p class="ok">✓ ${esc(t("saved"))}</p>
+  <div class="acts"><button class="big gold" id="vRe">${esc(t("rematch"))}</button><button class="big" id="vNew">${esc(t("newGame"))}</button><button class="big ghost" id="vBack">${esc(t("backGame"))}</button></div></div>`);
+  $("vRe").onclick=rematch;$("vNew").onclick=()=>{if(!newTrialGame())return;closeModal();freshGame()};$("vBack").onclick=closeModal;
+  if(top>=r.tgt)confetti()}
+function detail(p,r){const pv=t("pv"),x=[`${t("settlements")} ${p.s}`,`${t("cities")} ${p.c}`,`${t("vpCards")} ${p.v}`,`${t("extras")} ${p.e}`];
+  if(r.cc)x.push(`${t("metro")} ${p.m}`);if(p.road)x.push(`${t("road")} (2)`);if(p.army)x.push(`${t("army")} (2)`);if(p.port)x.push(`${t("v_port")} (2)`);
+  return `<div class="dp" style="--c:${COL[p.col]}"><b><span>${ord(p.pos)} ${esc(p.name)}</span><span>${p.tot} ${pv}</span></b><small>${esc(x.join(" · "))}</small></div>`}
+function showArchive(){const H=hist();
+  const fmt=d=>{try{return new Date(d).toLocaleString(L,{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}catch(e){return new Date(d).toLocaleString()}};
+  const cards=H.map(r=>{const R=ranked(r.ps),first=R.filter(p=>p.pos===1);
+    const win=first.length>1?t("tie",{n:R[0].tot}):`🏆 ${first[0].name} · ${R[0].tot} ${t("pv")}`;
+    return `<article class="ac" data-id="${r.id}"><div class="dt">${esc(fmt(r.d))}</div><div class="sn2">${esc(scName(r.sc))}</div><div class="chips2">${recChips(r).map(c=>`<span>${esc(c)}</span>`).join("")}</div><div class="wn">${esc(win)}</div>
+    <div class="det" hidden>${R.map(p=>detail(p,r)).join("")}</div>
+    <div class="row2"><button type="button" data-x="tog" aria-expanded="false">${esc(t("view"))}</button><button type="button" data-x="del">${esc(t("del"))}</button></div></article>`}).join("");
+  openModal(`<h2>${esc(t("archive"))}</h2>${H.length?`<div class="arch">${cards}</div>`:`<p class="ok" style="font-size:15px">${esc(t("archEmpty"))}</p>`}
+  <div class="acts" style="margin-top:14px">${H.length?`<button class="big ghost" id="aClr">${esc(t("clearAll"))}</button>`:""}<button class="big" id="aClose">${esc(t("close"))}</button></div>`);
+  $("aClose").onclick=closeModal;
+  if($("aClr")){let arm=0;$("aClr").onclick=e=>{if(!arm){arm=1;e.target.textContent=t("delSure");setTimeout(()=>{arm=0;if($("aClr"))$("aClr").textContent=t("clearAll")},3000);return}setHist([]);showArchive()}}
+  $("sheet").querySelectorAll(".ac").forEach(a=>{let arm=0;a.onclick=e=>{const b=e.target.closest("button");if(!b)return;
+    if(b.dataset.x==="tog"){const d=a.querySelector(".det");d.hidden=!d.hidden;b.textContent=t(d.hidden?"view":"hide");b.setAttribute("aria-expanded",!d.hidden)}
+    else if(b.dataset.x==="del"){if(!arm){arm=1;b.textContent=t("delSure");setTimeout(()=>{arm=0;b.textContent=t("del")},3000);return}
+      const id=+a.dataset.id;setHist(hist().filter(r=>r.id!==id));if(S.gid===id){S.gid=0;save()}showArchive()}}})}
+$("archBtn").onclick=showArchive;
+function setTheme(m){document.documentElement.setAttribute("data-theme",m);try{localStorage.setItem("catan-tema",m)}catch(e){}const mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=m==="dark"?"#5e0204":"#9e0306";$("themeBtn").setAttribute("aria-pressed",m==="dark")}
+$("themeBtn").onclick=()=>setTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");
+$("themeBtn").setAttribute("aria-pressed",document.documentElement.getAttribute("data-theme")==="dark");
+function showLang(){openModal(`<h2>${esc(t("lang"))}</h2><div class="langs">${LANGS.map(k=>`<button type="button" data-l="${k}" aria-pressed="${k===L}" lang="${k}">${LN[k]}</button>`).join("")}</div><div class="acts" style="margin-top:14px"><button class="big ghost" id="lClose">${esc(t("close"))}</button></div>`);
+  $("sheet").querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>{setLang(b.dataset.l);closeModal()});$("lClose").onclick=closeModal}
+document.querySelectorAll(".lg").forEach(b=>b.onclick=showLang);
+
+/* Confeti */
+let cfRun=0;
+function confetti(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;const c=$("cf"),x=c.getContext("2d");c.hidden=false;c.width=innerWidth;c.height=innerHeight;
+  const cols=["#f5c518","#e39a0b","#d1382c","#2a6fc9","#3f9b52","#fff6e0"],P=Array.from({length:140},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,vx:(Math.random()-.5)*3,vy:2+Math.random()*3,r:Math.random()*6.28,vr:(Math.random()-.5)*.3,w:6+Math.random()*6,h:4+Math.random()*4,c:cols[Math.random()*cols.length|0]}));
+  const id=++cfRun,t0=performance.now();
+  (function f(n){if(id!==cfRun)return;x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.04;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()});
+    if(n-t0<3500)requestAnimationFrame(f);else stopConfetti()})(t0)}
+function stopConfetti(){cfRun++;const c=$("cf");c.hidden=true}
+
+/* ===== Aplicar idioma ===== */
+function applyLang(){document.documentElement.lang=L;document.title=t("title");$("ver").textContent=`${t("title")} · v${VERSION}`;
+  document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));
+  document.querySelectorAll("[data-ih]").forEach(e=>e.innerHTML=t(e.dataset.ih));
+  document.querySelectorAll("[data-ia]").forEach(e=>e.setAttribute("aria-label",t(e.dataset.ia)));
+  document.querySelectorAll("[data-ip]").forEach(e=>e.setAttribute("placeholder",t(e.dataset.ip)));
+  document.querySelectorAll(".p1").forEach(e=>e.textContent="+1 "+t("pv"));document.querySelectorAll(".p2").forEach(e=>e.textContent="+2 "+t("pv"));
+  buildList();if(!$("lic").hidden)renderLic();trialUI()}
+function setLang(k){if(!LANGS.includes(k))return;
+  S.p.forEach((p,i)=>{if(LANGS.some(l=>COLN[l][i]===p.name))p.name=COLN[k][i]});
+  L=k;try{localStorage.setItem(LGK,k)}catch(e){}applyLang();draw()}
+/* Nombres por defecto: si están en otro idioma, se pasan al actual */
+S.p.forEach((p,i)=>{if(LANGS.some(l=>COLN[l][i]===p.name))p.name=COLN[L][i]});
 
 /* ===== Licencia y entrada ===== */
 const LICENSE_KEY="CATAN-PENTECH-2026";        // ← cambia aquí la clave
@@ -350,18 +702,17 @@ const licensed=()=>ls.get(LK)===norm(LICENSE_KEY);
 const used=()=>+(ls.get(TK)||0);
 let trial=false;
 function trialUI(){const b=$("trialbar");if(!trial){b.className="trialbar";return}
-  const left=TRIAL_MAX-used();b.className="trialbar on";
-  b.innerHTML=`Versión de prueba: partida ${used()} de ${TRIAL_MAX}. ${left>0?`Te queda${left>1?"n":""} ${left}.`:"Es la última."}`}
+  b.className="trialbar on";b.textContent=t("trial",{u:used(),m:TRIAL_MAX,l:TRIAL_MAX-used()})}
 function newTrialGame(){if(!trial)return true;
   if(used()>=TRIAL_MAX){showLic(true);return false}
   ls.set(TK,used()+1);trialUI();return true}
-function showLic(ended){const left=TRIAL_MAX-used();
-  $("licMsg").textContent=ended?"Se han acabado las 3 partidas de prueba. Consigue tu clave para seguir usando el contador sin límites.":"Introduce tu clave de licencia para desbloquear el contador. Si aún no la tienes, puedes probarlo gratis durante 3 partidas.";
-  $("licTry").hidden=left<=0;
-  $("licLeft").textContent=left>0?`Partidas de prueba disponibles: ${left} de ${TRIAL_MAX}`:"";
-  $("licErr").textContent="";$("lic").hidden=false;$("lic").classList.remove("out")}
+let licEnded=false;
+function renderLic(){const left=TRIAL_MAX-used();
+  $("licMsg").textContent=t(licEnded?"licEnded":"licMsg");$("licTry").hidden=left<=0;
+  $("licLeft").textContent=left>0?t("licLeft",{n:left,m:TRIAL_MAX}):"";if($("licErr").textContent)$("licErr").textContent=t("licErr")}
+function showLic(ended){licEnded=!!ended;closeModal();$("licErr").textContent="";renderLic();$("lic").hidden=false;$("lic").classList.remove("out")}
 function enterApp(){$("lic").classList.add("out");setTimeout(()=>{$("lic").hidden=true},500);trialUI()}
-$("licGo").onclick=()=>{if(norm($("licKey").value)===norm(LICENSE_KEY)){ls.set(LK,norm(LICENSE_KEY));trial=false;enterApp()}else{$("licErr").textContent="Clave incorrecta. Revísala e inténtalo de nuevo."}};
+$("licGo").onclick=()=>{if(norm($("licKey").value)===norm(LICENSE_KEY)){ls.set(LK,norm(LICENSE_KEY));trial=false;enterApp()}else{$("licErr").textContent=t("licErr")}};
 $("licKey").onkeydown=e=>{if(e.key==="Enter")$("licGo").click()};
 $("licBuy").onclick=()=>window.open(BUY_URL,"_blank","noopener");
 $("licTry").onclick=()=>{trial=true;
@@ -390,7 +741,7 @@ function start(){const sp=$("splash");if(sp.classList.contains("out"))return;mel
   if(licensed()){trial=false;trialUI()}else showLic(used()>=TRIAL_MAX)}
 $("splash").onclick=start;$("splash").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();start()}};
 
-draw();
+applyLang();draw();
 try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock("portrait").catch(()=>{})}catch(e){}
 if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 </script>
