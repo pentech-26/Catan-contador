@@ -692,12 +692,16 @@ function setLang(k){if(!LANGS.includes(k))return;
 S.p.forEach((p,i)=>{if(LANGS.some(l=>COLN[l][i]===p.name))p.name=COLN[L][i]});
 
 /* ===== Licencia y entrada ===== */
-const LICENSE_KEY="CATAN-PENTECH-2026";        // ← cambia aquí la clave
-const BUY_URL="https://buymeacoffee.com/pentech"; // ← pon aquí el enlace de compra
-const TRIAL_MAX=3;
+// Licencia (mismo sistema que Ratas de Wistar). La clave no distingue mayúsculas, espacios ni guiones.
+const LICENCIA={
+  clave:"VGWB-MMVY-5TMH",                    // ← la clave que va en el email de Buy Me a Coffee
+  compra:"https://buymeacoffee.com/pentech", // ← pon aquí el enlace del producto (…/pentech/e/XXXXXX)
+  pruebas:3                                  // partidas de prueba gratis
+};
+const LICENSE_KEY=LICENCIA.clave,BUY_URL=LICENCIA.compra,TRIAL_MAX=LICENCIA.pruebas;
 const LK="catan-licencia-v1",TK="catan-prueba-v1";
 const ls={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
-const norm=v=>String(v||"").trim().toUpperCase().replace(/\s+/g,"");
+const norm=v=>String(v||"").toUpperCase().replace(/[\s\-–—_.]+/g,"");
 const licensed=()=>ls.get(LK)===norm(LICENSE_KEY);
 const used=()=>+(ls.get(TK)||0);
 let trial=false;
